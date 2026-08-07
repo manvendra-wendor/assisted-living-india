@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   allowedDevOrigins: ["127.0.0.1"],
   images: {
     // The editorial stock sources already serve responsive assets; bypassing the local proxy also

@@ -3,12 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "clean:appledouble": "node scripts/clean-appledouble.mjs",
     "predev": "pnpm clean:appledouble",
     "dev": "next dev",
     "prebuild": "pnpm clean:appledouble",
     "build": "next build",
+    "build:cloudflare": "pnpm build && pnpm clean:appledouble && opennextjs-cloudflare build --skipNextBuild",
+    "preview:cloudflare": "pnpm build:cloudflare && opennextjs-cloudflare preview",
+    "deploy:cloudflare": "pnpm build:cloudflare && opennextjs-cloudflare deploy",
+    "upload:cloudflare": "pnpm build:cloudflare && opennextjs-cloudflare upload",
     "start": "next start",
     "lint": "eslint .",
     "test": "vitest run",
@@ -26,8 +33,9 @@
     "zod": "^4.1.11"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.14",
+    "@opennextjs/cloudflare": "^1.20.2",
     "@playwright/test": "^1.56.1",
+    "@tailwindcss/postcss": "^4.1.14",
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.6",
     "@types/react-dom": "^19.0.2",
@@ -35,7 +43,8 @@
     "eslint-config-next": "16.3.0",
     "tailwindcss": "^4.1.14",
     "typescript": "^5.7.2",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "wrangler": "^4.120.0"
   },
   "packageManager": "pnpm@11.16.0"
 }
