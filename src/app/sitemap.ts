@@ -3,7 +3,7 @@ import { articles, careTypes, locationPages, properties, siteConfig } from "@/li
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const staticPages = ["", "/directory", "/blog", "/concierge", "/list-your-property", "/about", "/contact", "/editorial-policy", "/review-guidelines", "/privacy", "/terms"];
+  const staticPages = ["", "/directory", "/blog", "/concierge", "/list-your-property", "/about", "/careers", "/contact", "/editorial-policy", "/review-guidelines", "/privacy", "/terms"];
   return [
     ...staticPages.map((path) => ({ url: `${siteConfig.url}${path}`, lastModified: now, changeFrequency: path === "" ? "weekly" as const : "monthly" as const, priority: path === "" ? 1 : .7 })),
     ...properties.map((property) => ({ url: `${siteConfig.url}/properties/${property.slug}`, lastModified: new Date(property.lastUpdated), changeFrequency: "weekly" as const, priority: .8 })),

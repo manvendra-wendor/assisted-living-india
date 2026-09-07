@@ -1,6 +1,6 @@
 # Editorial image sources
 
-Checked: 2026-08-08
+Checked: 2026-09-07
 
 The people and lifestyle photographs below are licensed stock used to make the MVP feel culturally relevant to Indian families. They are editorial illustrations and must not be presented as photographs of a listed property. Provider-supplied, licensed property photographs should replace them when a listing is claimed.
 
@@ -15,4 +15,10 @@ The people and lifestyle photographs below are licensed stock used to make the M
 | Dehradun / Forest Research Institute | https://www.pexels.com/photo/forest-research-institute-facade-in-dehradun-35472467/ |
 | Gurgaon / Gurugram city view | https://www.pexels.com/photo/aerial-view-of-city-buildings-7104646/ |
 
+| Careers page / grandparents with grandchild | https://www.pexels.com/photo/grandparents-with-boy-18394078/ |
+
 Pexels licence: https://www.pexels.com/license/
+
+## Adding an image
+
+Register the URL in `editorialImages` in `src/lib/data.ts` rather than inlining it in a page, add a row above, and confirm the host is allowed in `next.config.ts` `images.remotePatterns`. Decorative photography takes `alt=""`; an image carrying meaning needs a real description.

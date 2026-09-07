@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, ClipboardList, HeartHandshake, IndianRupee, MapPin } from "lucide-react";
+import { CityLinks } from "@/components/city-links";
 import { PropertyCard } from "@/components/property-card";
 import { SearchBox } from "@/components/search-box";
 import { Breadcrumbs, JsonLd, SectionHeading } from "@/components/ui";
-import { articles, locationPages, properties, siteConfig } from "@/lib/data";
+import { articles, careTypes, locationPages, properties, siteConfig } from "@/lib/data";
 
 export function generateStaticParams() {
   return locationPages.map((location) => ({ city: location.slug }));
@@ -66,6 +67,7 @@ export default async function LocationPage({ params }: { params: Promise<{ city:
       </section>
       <section className="section">
         <div className="container"><SectionHeading eyebrow={`${listings.length} editorial profiles to explore`} title={`Compare care residences ${location.slug === "gurgaon" ? "in Gurgaon and nearby Delhi NCR" : `around ${location.name}`}`} body="Start with the services shown, then ask each operator to confirm availability and suitability following an individual assessment." action={{ label: "Open filtered directory", href: `/directory?city=${location.parentCitySlug}&care=assisted-living` }} /><div className="property-grid">{listings.map((property) => <PropertyCard property={property} key={property.id} />)}</div></div>
+        <div className="container"><div className="care-link-row"><span>Care types in {location.name}:</span>{careTypes.map((care) => <Link href={`/care/${care.slug}`} key={care.slug}>{care.name}</Link>)}</div></div>
       </section>
       <section className="section section-soft">
         <div className="container"><SectionHeading eyebrow="What to look for" title="The details behind a confident decision" /><div className="care-grid">{[
@@ -75,8 +77,9 @@ export default async function LocationPage({ params }: { params: Promise<{ city:
         ].map(({ icon: Icon, title, body }, index) => <div className="care-card" key={title}><span className="care-number">0{index + 1}</span><h3>{title}</h3><p>{body}</p><Icon size={20} /></div>)}</div></div>
       </section>
       <section className="section">
-        <div className="narrow"><span className="eyebrow">Frequently asked questions</span><h2 style={{ color: "var(--forest)" }}>Planning senior care in {location.name}</h2>{faqs.map((faq) => <details key={faq.question} style={{ padding: "20px 0", borderBottom: "1px solid var(--line)" }}><summary style={{ color: "var(--forest)", fontWeight: 750, cursor: "pointer" }}>{faq.question}</summary><p style={{ color: "var(--muted)", margin: "14px 0 0" }}>{faq.answer}</p></details>)}<div className="location-guide-links">{article && <Link className="text-link" href={`/blog/${article.slug}`}>Read: {article.title} <ArrowRight size={15} /></Link>}<Link className="text-link" href="/blog/how-to-choose-assisted-living">Use the family comparison checklist <ArrowRight size={15} /></Link></div></div>
+        <div className="narrow"><span className="eyebrow">Frequently asked questions</span><h2 style={{ color: "var(--forest)" }}>Planning senior care in {location.name}</h2><div className="faq-list">{faqs.map((faq) => <details className="faq-item" key={faq.question}><summary>{faq.question}</summary><p>{faq.answer}</p></details>)}</div><div className="location-guide-links">{article && <Link className="text-link" href={`/blog/${article.slug}`}>Read: {article.title} <ArrowRight size={15} /></Link>}<Link className="text-link" href="/blog/how-to-choose-assisted-living">Use the family comparison checklist <ArrowRight size={15} /></Link></div></div>
       </section>
+      <CityLinks currentSlug={location.slug} title={`Senior care beyond ${location.name}`} body="Families often compare two or three cities before deciding. Each guide covers local residences, typical monthly costs and what to verify on a visit." />
     </>
   );
 }

@@ -98,3 +98,13 @@ export interface ReviewPreview {
   body: string;
   createdAt: string;
 }
+
+export interface JobRole {
+  slug: string;
+  title: string;
+  team: string;
+  location: string;
+  commitment: string;
+  summary: string;
+  focus: string[];
+}

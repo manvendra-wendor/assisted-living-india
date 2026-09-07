@@ -7,6 +7,7 @@ import { CompareToggle } from "@/components/compare-provider";
 import { LeadForm } from "@/components/lead-form";
 import { PricingTrigger } from "@/components/pricing-modal";
 import { ReviewForm } from "@/components/review-form";
+import { CityLinks } from "@/components/city-links";
 import { Breadcrumbs, JsonLd } from "@/components/ui";
 import { availabilityLabel, careTypes, facilities, getCity, getProperty, properties, siteConfig } from "@/lib/data";
 
@@ -63,6 +64,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
           <div className="side-card"><PricingTrigger propertyId={property.id} propertyName={property.name} city={city?.name} className="side-card-price pricing-summary-trigger"><small>Personalised monthly fees</small><strong>Pricing on request</strong></PricingTrigger><p>Share a few details to receive relevant pricing for your care needs and preferred timeline.</p><PricingTrigger propertyId={property.id} propertyName={property.name} city={city?.name} className="button button-gold">Get pricing</PricingTrigger><a className="button button-ghost" href="#enquire">Enquire with residence</a><Link className="button button-ghost" href={`/concierge?property=${property.slug}`}>Ask our concierge</Link><div className="side-card-trust"><span><Clock3 size={14} /> Typical response target: one business day</span><span><ShieldCheck size={14} /> Your details are only used for this enquiry</span><span><MessageSquareText size={14} /> No booking fee from our directory</span></div></div>
         </aside>
       </div>
+      <CityLinks currentSlug={property.citySlug} title="Explore senior care in other cities" body="Comparing across cities is common when family is spread out. Each guide covers local residences and typical monthly costs." />
     </>
   );
 }

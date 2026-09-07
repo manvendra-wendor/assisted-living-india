@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { DirectoryExplorer } from "@/components/directory-explorer";
+import { CityLinks } from "@/components/city-links";
 import { Breadcrumbs } from "@/components/ui";
 import { getCareType, getCity, popularLocations } from "@/lib/data";
 
@@ -26,6 +27,7 @@ export default async function DirectoryPage({ searchParams }: { searchParams: Pr
         </div>
       </header>
       <DirectoryExplorer initialCity={params.city} initialCare={params.care} />
+      <CityLinks currentSlug={params.city} />
     </>
   );
 }

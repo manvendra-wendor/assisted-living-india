@@ -5,6 +5,7 @@ import type {
   CareTypeSlug,
   City,
   FacilityKey,
+  JobRole,
   Property,
   ReviewPreview,
 } from "@/lib/types";
@@ -518,3 +519,62 @@ export function availabilityLabel(value: Availability) {
   if (value === "on-request") return "Ask provider";
   return "Not listed";
 }
+
+export const careersEmail = "hello@assistedlivingindia.com";
+
+export const openRoles: JobRole[] = [
+  {
+    slug: "family-care-advisor",
+    title: "Family Care Advisor",
+    team: "Concierge",
+    location: "Gurgaon or remote (India)",
+    commitment: "Full-time",
+    summary: "Speak with families weighing a move for a parent, help them frame the right questions and build an unbiased shortlist.",
+    focus: ["Run first conversations with warmth and zero pressure", "Translate clinical needs into practical care requirements", "Hand families a shortlist they can defend to a sibling"],
+  },
+  {
+    slug: "editorial-researcher",
+    title: "Editorial Researcher, Senior Care",
+    team: "Editorial",
+    location: "Remote (India)",
+    commitment: "Full-time",
+    summary: "Verify what residences actually offer, document the sourcing behind every claim and keep profiles honest as facilities change.",
+    focus: ["Check care claims against primary sources", "Record sourcing and verification dates on each profile", "Flag anything a family could reasonably misread"],
+  },
+  {
+    slug: "partnerships-manager",
+    title: "Partnerships Manager, Residences",
+    team: "Growth",
+    location: "Mumbai or Bengaluru",
+    commitment: "Full-time",
+    summary: "Bring quality operators onto the directory and hold the line on what they must disclose before a profile goes live.",
+    focus: ["Onboard residences across priority cities", "Collect evidence for care and pricing claims", "Keep commercial interest out of editorial judgement"],
+  },
+  {
+    slug: "product-engineer",
+    title: "Product Engineer",
+    team: "Engineering",
+    location: "Remote (India)",
+    commitment: "Full-time",
+    summary: "Build the comparison, search and profile surfaces families rely on — with Next.js, TypeScript and Supabase.",
+    focus: ["Ship comparison and directory features end to end", "Treat performance and accessibility as requirements", "Work directly with editorial on how data is modelled"],
+  },
+  {
+    slug: "content-seo-associate",
+    title: "Content & SEO Associate",
+    team: "Editorial",
+    location: "Remote (India)",
+    commitment: "Full-time",
+    summary: "Own the city and care guides that families find first, and make sure each one answers the question it promises to answer.",
+    focus: ["Plan guides around real family search intent", "Keep location and care pages distinct, not duplicated", "Measure whether a page actually resolved the question"],
+  },
+  {
+    slug: "operations-associate",
+    title: "Operations Associate",
+    team: "Operations",
+    location: "Gurgaon",
+    commitment: "Full-time",
+    summary: "Keep enquiries, reviews and provider submissions moving, and protect the review process from anything that would distort it.",
+    focus: ["Moderate reviews against published guidelines", "Track enquiries through to a family outcome", "Spot process gaps before families feel them"],
+  },
+];
