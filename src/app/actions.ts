@@ -95,7 +95,7 @@ export async function sendMagicLink(_previous: ActionState, formData: FormData):
   if (!/^\S+@\S+\.\S+$/.test(email)) return { status: "error", message: "Enter a valid email address." };
   const supabase = await createSupabaseServerClient();
   if (!supabase) return { status: "success", message: "Authentication preview complete. Configure Supabase to send magic links." };
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://careya.in").replace(/\/+$/, "");
   const { error } = await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: `${siteUrl}/auth/callback` } });
   if (error) return { status: "error", message: "We could not send a sign-in link. Please try again." };
   return { status: "success", message: "Check your email for a secure sign-in link." };

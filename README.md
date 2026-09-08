@@ -29,7 +29,7 @@ Set these in `.env` (or `.env.local`) for local work, and as Worker variables or
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Canonical origin used by metadata, sitemap, and JSON-LD. Defaults to `http://localhost:3000`. |
+| `NEXT_PUBLIC_SITE_URL` | Canonical origin used by metadata, sitemap, and JSON-LD. Defaults to `https://careya.in`. |
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL. |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key for browser and SSR clients. |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server-only key for admin and moderation workflows. Never expose to the client. |

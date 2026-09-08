@@ -15,7 +15,7 @@ export const siteConfig = {
   shortName: "ALI",
   description:
     "Compare premium assisted living, independent living, dementia care and senior communities across India.",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://careya.in").replace(/\/+$/, ""),
 };
 
 export const editorialImages = {
@@ -520,7 +520,7 @@ export function availabilityLabel(value: Availability) {
   return "Not listed";
 }
 
-export const careersEmail = "hello@assistedlivingindia.com";
+export const careersEmail = "careers@careya.in";
 
 export const openRoles: JobRole[] = [
   {
