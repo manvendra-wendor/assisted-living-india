@@ -48,24 +48,26 @@ export default function Home() {
         description: siteConfig.description,
       }} />
       <section className="hero">
-        <Image className="hero-image hero-image-india" src={editorialImages.hero} alt="An Indian family discussing senior living together at home" fill priority loading="eager" fetchPriority="high" sizes="100vw" />
         <div className="container hero-inner">
           <div className="hero-copy">
             <span className="eyebrow">India’s assisted-living directory</span>
-            <h1>Find assisted living in India. <em>Choose with clarity.</em></h1>
+            <h1>Find assisted living in India, <em>chosen with clarity.</em></h1>
             <p className="hero-lede">Compare premium assisted living, independent communities, dementia care and recovery support across India’s leading eldercare destinations.</p>
             <SearchBox />
             <div className="hero-quick-links" aria-label="Popular assisted-living locations">
-              <span>Popular:</span>
+              <span>Popular</span>
               {popularLocations.slice(0, 4).map((location) => <Link href={`/assisted-living/${location.slug}`} key={location.slug}>{location.name}</Link>)}
             </div>
             <p className="hero-note"><BadgeCheck size={16} /> Every profile shows whether details are editorial, claimed or operator-verified.</p>
           </div>
-        </div>
-        <div className="trust-row">
-          <div className="container">
-            {trustItems.map(({ icon: Icon, title, detail }) => <div className="trust-item" key={title}><Icon size={25} strokeWidth={1.5} /><div><strong>{title}</strong><small>{detail}</small></div></div>)}
+          <div className="hero-media">
+            <div className="hero-media-frame">
+              <Image src={editorialImages.hero} alt="An Indian family discussing senior living together at home" fill priority loading="eager" fetchPriority="high" sizes="(max-width: 760px) 92vw, 45vw" />
+            </div>
           </div>
+        </div>
+        <div className="container hero-trust">
+          {trustItems.map(({ icon: Icon, title, detail }) => <div className="hero-trust-item" key={title}><Icon size={22} strokeWidth={1.6} /><div><strong>{title}</strong><small>{detail}</small></div></div>)}
         </div>
       </section>
 

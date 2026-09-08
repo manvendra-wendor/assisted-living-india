@@ -18,7 +18,7 @@ export function SearchBox({ compact = false, defaultCity = "", defaultCare = "" 
           {careTypes.map((care) => <option key={care.slug} value={care.slug}>{care.name}</option>)}
         </select>
       </label>
-      <button className="button button-gold" type="submit"><Search size={18} /> Search residences</button>
+      <button className="button" type="submit"><Search size={17} /> Search</button>
     </form>
   );
 }

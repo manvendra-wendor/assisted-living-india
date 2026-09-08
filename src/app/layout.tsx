@@ -1,10 +1,17 @@
 import type { Metadata, Viewport } from "next";
+import { Hanken_Grotesk } from "next/font/google";
 import { CompareProvider } from "@/components/compare-provider";
 import { PricingModalProvider } from "@/components/pricing-modal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { editorialImages, siteConfig } from "@/lib/data";
 import "./globals.css";
+
+const sans = Hanken_Grotesk({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -20,7 +27,7 @@ export const viewport: Viewport = { themeColor: "#173f35", colorScheme: "light" 
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    <html lang="en" data-scroll-behavior="smooth" className={sans.variable}>
       <body>
         <CompareProvider>
           <PricingModalProvider>

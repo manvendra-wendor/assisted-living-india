@@ -1,0 +1,14 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 1280, "h": 1800, "title": "Fresh Editorial — leading" },
+    { "file": "WarmRounded.dc.html", "x": 1440, "y": 0, "w": 1280, "h": 1800, "title": "Warm & Rounded" },
+    { "file": "BoldStructured.dc.html", "x": 2880, "y": 0, "w": 1280, "h": 1800, "title": "Bold & Structured" }
+  ],
+  "annotations": [
+    { "id": "brief", "x": 0, "y": -168, "w": 560, "text": "Home page — 3 fresh / modern directions.\nAll three keep the brand DNA: Georgia serif display, forest + gold palette, soft radius + shadow (no hairline grids), and the editorial-integrity cues (“Editorial preview”, sources shown). Sample residence names are illustrative. Prices left as [FROM PRICE] placeholders." },
+    { "id": "note-main", "x": 0, "y": 1860, "w": 420, "text": "Fresh Editorial (leading pick). Light ivory ground, airy two-column hero — no dark full-bleed — photo in a soft rounded frame with a sage panel behind, restrained gold, Hanken Grotesk UI type. Calmest and most premium. Tradeoff: loses the current photographic hero's immediate emotional punch." },
+    { "id": "note-warm", "x": 1440, "y": 1860, "w": 420, "text": "Warm & Rounded. Cream ground with soft ambient glows, terracotta accent, big rounded shapes + pill nav, centred hero, city pills, friendly Figtree UI type. Most approachable for anxious families. Tradeoff: rounded-everything can read as less authoritative for a high-stakes decision." },
+    { "id": "note-bold", "x": 2880, "y": 1860, "w": 420, "text": "Bold & Structured. Hard forest / photo split hero, XL Georgia display against tiny tracked caps, search bar on the seam, dark proof band, Space Grotesk UI type, sharper card edges. Most confident and distinctive. Tradeoff: closest to today's dark hero, so the least of a departure." }
+  ],
+  "launch": { "view": "canvas" }
+}
