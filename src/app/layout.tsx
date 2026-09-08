@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: { default: "Assisted Living India | Compare Premium Senior Care", template: "%s | Assisted Living India" },
   description: siteConfig.description,
   applicationName: siteConfig.name,
+  verification: { google: "To05qShSxs0zpFN-JjH1rGfSvsWReil4zmBYBCyvwKE" },
   openGraph: { type: "website", locale: "en_IN", siteName: siteConfig.name, title: siteConfig.name, description: siteConfig.description, images: [{ url: editorialImages.hero, alt: "An Indian family discussing senior living together" }] },
   twitter: { card: "summary_large_image", title: siteConfig.name, description: siteConfig.description, images: [editorialImages.hero] },
 };
