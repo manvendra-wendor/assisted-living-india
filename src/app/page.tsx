@@ -5,10 +5,14 @@ import {
   ArrowRight,
   BadgeCheck,
   BookOpenText,
+  CalendarCheck2,
+  Check,
+  ChevronRight,
   GitCompareArrows,
   HeartHandshake,
   ListChecks,
   MessageCircleHeart,
+  Plane,
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
@@ -18,9 +22,15 @@ import { JsonLd, SectionHeading } from "@/components/ui";
 import { articles, careTypes, editorialImages, popularLocations, properties, siteConfig } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Assisted Living in India | Compare Premium Senior Care",
-  description: "Find and compare assisted living in India, including premium senior living, dementia care, rehabilitation and post-operative care across leading cities.",
+  title: "Assisted Living in India | Premium Senior Living Directory",
+  description: "Compare premium assisted living, luxury senior living, dementia care and old age homes in India by city, care services, pricing guidance, reviews and verification status.",
+  keywords: ["assisted living in India", "senior living India", "luxury old age homes India", "dementia care India", "retirement homes India"],
   alternates: { canonical: "/" },
+  openGraph: {
+    title: "Assisted Living in India | Premium Senior Living Directory",
+    description: "Compare premium assisted living, luxury senior living, dementia care and old age homes across India.",
+    url: "/",
+  },
 };
 
 const trustItems = [
@@ -35,24 +45,80 @@ const searchPaths = [
   { icon: BookOpenText, title: "I’m just researching", detail: "Understand care types, costs and what to ask.", href: "/blog/what-is-assisted-living", action: "Read the essentials" },
 ];
 
+const aiOverviewFaqs = [
+  {
+    question: "What is the best assisted living option in India?",
+    answer: "The best assisted living option depends on the parent’s care needs, preferred city, monthly budget, medical support requirements, room preference and family travel access. Families should compare services, staffing, emergency response, fees, reviews and verification status before shortlisting.",
+  },
+  {
+    question: "How much does premium assisted living cost in India?",
+    answer: "Premium assisted living in India commonly depends on the city, room type, dependency level, nursing needs, therapies and meal or housekeeping inclusions. Families comparing options in the 1 lakh to 2 lakh rupees per month range should request an assessment-based written estimate.",
+  },
+  {
+    question: "How can NRIs compare senior living for parents in India?",
+    answer: "NRIs can shortlist by city, care type, hospital access, staffing, pricing inclusions and family reviews, then arrange calls, video tours and in-person visits. A concierge shortlist can help organise questions before contacting residences.",
+  },
+];
+
+const conciergeStats = [
+  { value: "1L-2L", label: "monthly search range many premium families compare" },
+  { value: "9", label: "city guides connected through the directory" },
+  { value: "24x7", label: "medical-support questions to verify before choosing" },
+];
+
 export default function Home() {
   const featured = properties.filter((property) => property.featured).slice(0, 6);
   const latestArticles = articles.slice(0, 3);
   return (
     <>
-      <JsonLd data={{
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        name: siteConfig.name,
-        url: siteConfig.url,
-        description: siteConfig.description,
-      }} />
+      <JsonLd data={[
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: siteConfig.name,
+          url: siteConfig.url,
+          description: siteConfig.description,
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: siteConfig.name,
+          url: siteConfig.url,
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Assisted Living in India",
+          url: siteConfig.url,
+          description: "A directory for comparing premium assisted living, senior living, dementia care and old age homes in India.",
+          about: careTypes.map((care) => care.name),
+          mainEntity: {
+            "@type": "ItemList",
+            itemListElement: popularLocations.slice(0, 8).map((location, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              name: `Assisted living in ${location.name}`,
+              url: `${siteConfig.url}/assisted-living/${location.slug}`,
+            })),
+          },
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: aiOverviewFaqs.map((faq) => ({
+            "@type": "Question",
+            name: faq.question,
+            acceptedAnswer: { "@type": "Answer", text: faq.answer },
+          })),
+        },
+      ]} />
       <section className="hero">
+        <Image className="hero-background-image" src={editorialImages.hero} alt="Indian family comparing senior living options at home" fill priority loading="eager" fetchPriority="high" sizes="100vw" />
         <div className="container hero-inner">
           <div className="hero-copy">
-            <span className="eyebrow">India’s assisted-living directory</span>
-            <h1>Find assisted living in India, <em>chosen with clarity.</em></h1>
-            <p className="hero-lede">Compare premium assisted living, independent communities, dementia care and recovery support across India’s leading eldercare destinations.</p>
+            <span className="eyebrow">Premium senior care directory for India</span>
+            <h1>Assisted living in India for families choosing from afar.</h1>
+            <p className="hero-lede">Compare luxury old age homes, senior living communities, dementia care and recovery residences by city, services, pricing guidance, reviews and verification status.</p>
             <SearchBox />
             <div className="hero-quick-links" aria-label="Popular assisted-living locations">
               <span>Popular</span>
@@ -61,13 +127,52 @@ export default function Home() {
             <p className="hero-note"><BadgeCheck size={16} /> Every profile shows whether details are editorial, claimed or operator-verified.</p>
           </div>
           <div className="hero-media">
-            <div className="hero-media-frame">
-              <Image src={editorialImages.hero} alt="An Indian family discussing senior living together at home" fill priority loading="eager" fetchPriority="high" sizes="(max-width: 760px) 92vw, 45vw" />
+            <div className="hero-assurance" aria-label="How the directory helps families">
+              <span className="hero-assurance-kicker"><ShieldCheck size={14} /> Made for a considered decision</span>
+              <strong>Compare care with context.</strong>
+              <p>Services, accommodation, family reviews and sourcing status—organised in one place.</p>
+              <div className="hero-assurance-list"><span><Check size={13} /> Care needs</span><span><Check size={13} /> Costs &amp; inclusions</span><span><Check size={13} /> Visit readiness</span></div>
             </div>
           </div>
         </div>
-        <div className="container hero-trust">
+        <div className="container hero-trust" aria-label="Directory benefits">
           {trustItems.map(({ icon: Icon, title, detail }) => <div className="hero-trust-item" key={title}><Icon size={22} strokeWidth={1.6} /><div><strong>{title}</strong><small>{detail}</small></div></div>)}
+        </div>
+      </section>
+
+      <section className="nri-concierge-section">
+        <div className="container nri-concierge-panel">
+          <div className="nri-concierge-intro">
+            <span className="eyebrow">For families living abroad</span>
+            <h2>NRI families can shortlist with fewer unknowns.</h2>
+            <p>Share your parent’s care needs, preferred city, budget range and timeline. We organise the search before you begin calling residences.</p>
+          </div>
+          <div className="nri-stats" aria-label="Premium assisted-living search signals">
+            {conciergeStats.map((stat) => <span key={stat.value}><strong>{stat.value}</strong><small>{stat.label}</small></span>)}
+          </div>
+          <div className="nri-concierge-points">
+            <span><Plane size={19} /> Long-distance family support</span>
+            <span><CalendarCheck2 size={19} /> A simpler route to a shortlist</span>
+          </div>
+          <Link className="button button-light" href="/concierge">Talk through your search <ArrowRight size={17} /></Link>
+        </div>
+      </section>
+
+      <section className="section answer-section">
+        <div className="container answer-layout">
+          <div>
+            <span className="eyebrow">Short answer for families</span>
+            <h2>How to choose the best assisted living in India</h2>
+            <p>Start with the parent’s daily support needs, then compare the residence by care capability, monthly inclusions, room type, emergency process, staff training, reviews and how clearly the provider documents what is included.</p>
+            <div className="answer-actions">
+              <Link className="button" href="/directory">Compare residences <ArrowRight size={17} /></Link>
+              <Link className="text-link" href="/blog/how-to-choose-assisted-living">Read the comparison checklist <ChevronRight size={15} /></Link>
+            </div>
+          </div>
+          <div className="answer-checklist" aria-label="Assisted living comparison checklist">
+            <h3>Compare before you enquire</h3>
+            {["Care plan and night staffing", "Monthly fees, deposits and add-ons", "Dementia, Parkinson’s or post-operative support", "Family reviews and profile sourcing", "Hospital access and emergency response"].map((item) => <span key={item}><Check size={16} /> {item}</span>)}
+          </div>
         </div>
       </section>
 
@@ -101,7 +206,27 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section seo-link-section">
+        <div className="container seo-link-layout">
+          <div>
+            <span className="eyebrow">Popular searches</span>
+            <h2>Explore senior living by need and city.</h2>
+            <p>These links help families and search engines understand the directory structure: care-led pages explain the need, city pages compare local options, and property pages carry profile-level details.</p>
+          </div>
+          <div className="seo-link-groups">
+            <div>
+              <h3>Care needs</h3>
+              {careTypes.map((care) => <Link href={`/care/${care.slug}`} key={care.slug}>{care.name}<ArrowRight size={14} /></Link>)}
+            </div>
+            <div>
+              <h3>High-intent cities</h3>
+              {popularLocations.slice(0, 8).map((location) => <Link href={`/assisted-living/${location.slug}`} key={location.slug}>Assisted living in {location.name}<ArrowRight size={14} /></Link>)}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section featured-residences-section">
         <div className="container">
           <SectionHeading eyebrow="A thoughtful first look" title="Residences families are exploring" body="Preview profiles demonstrate the details you’ll be able to compare. Operator verification is always shown clearly." action={{ label: "View all residences", href: "/directory" }} />
           <div className="property-grid">
@@ -153,12 +278,14 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="section section-soft"><div className="narrow"><SectionHeading eyebrow="Questions families ask" title="Planning assisted living in India" /><div className="faq-list">{aiOverviewFaqs.map((faq) => <details className="faq-item" key={faq.question}><summary>{faq.question}</summary><p>{faq.answer}</p></details>)}</div><nav className="care-reading-links" aria-label="Planning guides"><Link href="/blog/cost-of-assisted-living-in-india">Compare monthly fees</Link><Link href="/blog">Explore the family care journal</Link></nav></div></section>
+
       <section className="section section-dark">
-        <div className="container" style={{ textAlign: "center" }}>
-          <Sparkles size={28} color="#e2b26e" style={{ margin: "0 auto 18px" }} />
+        <div className="container operator-cta">
+          <Sparkles size={28} color="#e2b26e" />
           <span className="eyebrow">For senior-living operators</span>
-          <h2 style={{ maxWidth: 760, margin: "0 auto 20px" }}>Help the right families understand what makes your care different.</h2>
-          <p style={{ maxWidth: 650, margin: "0 auto 30px", color: "#b8c7c0" }}>Submit or claim a profile, document your facilities and respond to qualified family enquiries.</p>
+          <h2>Help the right families understand what makes your care different.</h2>
+          <p>Submit or claim a profile, document your facilities and respond to qualified family enquiries.</p>
           <Link className="button button-gold" href="/list-your-property">List your property <ArrowRight size={17} /></Link>
         </div>
       </section>

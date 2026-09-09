@@ -60,8 +60,13 @@ export interface Property {
   stayTypes: string[];
   priceFrom: number | null;
   priceNote: string;
-  rating: number;
+  rating: number | null;
   reviewCount: number;
+  googlePlaceId?: string;
+  googleRating?: number;
+  googleReviewCount?: number;
+  googleMapsUrl?: string;
+  officialWebsiteUrl?: string;
   verified: boolean;
   claimed: boolean;
   featured: boolean;
@@ -87,6 +92,11 @@ export interface Article {
   readTime: string;
   image: string;
   sections: ArticleSection[];
+  summary?: string;
+  updatedAt?: string;
+  relatedLinks?: { label: string; href: string }[];
+  sources?: { label: string; href: string }[];
+  faqs?: { question: string; answer: string }[];
 }
 
 export interface ReviewPreview {

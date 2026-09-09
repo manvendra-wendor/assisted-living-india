@@ -3,9 +3,15 @@ import { articles, formatPrice, popularLocations, properties } from "@/lib/data"
 import { filterProperties } from "@/lib/search";
 
 describe("directory catalogue", () => {
-  it("contains three preview profiles for each of nine launch markets", () => {
-    expect(properties).toHaveLength(27);
-    expect(new Set(properties.map((property) => property.citySlug)).size).toBe(9);
+  it("contains source-labelled profiles across the expanded India launch markets", () => {
+    expect(properties).toHaveLength(40);
+    expect(new Set(properties.map((property) => property.citySlug)).size).toBe(14);
+    expect(properties.every((property) => property.officialWebsiteUrl?.startsWith("https://"))).toBe(true);
+  });
+
+  it("uses operator-sourced listing images instead of stock gallery fallbacks", () => {
+    const stockHosts = ["images.pexels.com", "images.unsplash.com", "plus.unsplash.com"];
+    expect(properties.every((property) => !stockHosts.some((host) => property.image.includes(host)))).toBe(true);
   });
 
   it("prioritises the leading India location journey", () => {
@@ -14,9 +20,9 @@ describe("directory catalogue", () => {
   });
 
   it("filters by city, care, budget, and required capability", () => {
-    const results = filterProperties(properties, { city: "delhi-ncr", care: "assisted-living", budget: "under-100", facilities: ["dementia"] });
-    expect(results).toHaveLength(1);
-    expect(results[0].locality).toBe("Gurgaon");
+    const results = filterProperties(properties, { city: "delhi-ncr", care: "assisted-living", facilities: ["dementia"] });
+    expect(results.map((property) => property.slug)).toEqual(expect.arrayContaining(["epoch-vermeer-house", "aurum-living-gurgaon"]));
+    expect(results.every((property) => ["gurgaon", "noida", "bhiwadi"].includes(property.citySlug))).toBe(true);
   });
 
   it("places price-on-request entries after priced entries when sorting low to high", () => {
