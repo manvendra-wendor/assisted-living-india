@@ -804,7 +804,126 @@ export const guideTopics = [
   { id: "cities", label: "City guides", description: "Explore closer to home", categories: ["City guide"], href: "/directory" },
 ];
 
-export const articles: Article[] = [...guides, ...researchGuides, ...cityArticles];
+const articleFocus: Record<string, { label: string; careHref: string; questions: string[] }> = {
+  "Costs & planning": {
+    label: "the complete cost of care",
+    careHref: "/blog/cost-of-assisted-living-in-india",
+    questions: ["Which care services are included in the base fee?", "Which charges change after a care reassessment?", "What is payable before admission and what is refundable?"],
+  },
+  "Dementia care": {
+    label: "safe, person-centred dementia support",
+    careHref: "/care/dementia-care",
+    questions: ["How are routines and life history recorded?", "Who is present overnight and how are changes escalated?", "What dementia-specific training does the regular team receive?"],
+  },
+  Recovery: {
+    label: "a coordinated recovery plan",
+    careHref: "/care/rehabilitation",
+    questions: ["Which clinicians and therapists will be involved?", "How often is progress reviewed against daily-life goals?", "What support is available outside scheduled therapy?"],
+  },
+  "Nutrition & wellbeing": {
+    label: "nutrition that reflects the person’s health and preferences",
+    careHref: "/care/assisted-living",
+    questions: ["Who assesses nutrition and reviews changes?", "How are regional preferences and therapeutic diets handled?", "How are appetite, hydration and weight concerns escalated?"],
+  },
+  "Care comparison": {
+    label: "the right level of day-to-day and clinical support",
+    careHref: "/care/assisted-living",
+    questions: ["What help is reliably available during the day and night?", "Which needs would require a different care setting?", "How does the provider reassess support over time?"],
+  },
+  "Assisted living 101": {
+    label: "assisted living matched to the person",
+    careHref: "/care/assisted-living",
+    questions: ["Which daily activities need regular assistance?", "How much independence and choice does the routine preserve?", "What happens when support needs increase?"],
+  },
+  "Family guide": {
+    label: "a respectful, evidence-led family decision",
+    careHref: "/care/assisted-living",
+    questions: ["What matters most to the older adult?", "Which risks must the residence be able to manage?", "What evidence will the family use to compare options?"],
+  },
+  "City guide": {
+    label: "the right residence in a practical location",
+    careHref: "/care/assisted-living",
+    questions: ["Can family visit without an exhausting journey?", "Is the residence practical for the treating hospital?", "Does the local team meet the assessed care needs?"],
+  },
+};
+
+function expandArticle(article: Article): Article {
+  const city = article.citySlug ? cities.find((item) => item.slug === article.citySlug) : undefined;
+  const focus = articleFocus[article.category] ?? articleFocus["Family guide"];
+  const neighbourhoodContext = city ? ` In ${city.name}, this means comparing the actual journey from ${city.neighbourhoods.join(", ")} as well as the address printed in a brochure.` : " For families comparing options across India, the same care brief should be used in every city so that location does not hide differences in support.";
+  const supplementalSections: Article["sections"] = [
+    {
+      heading: `Turn this guide into a care brief${city ? ` for ${city.name}` : ""}`,
+      paragraphs: [
+        `Before contacting residences, write a one-page brief describing the older adult rather than beginning with a list of buildings. Include mobility, memory, medication routines, personal-care needs, sleep, food preferences, language, social interests and the support family members currently provide. Note what the person can do independently as carefully as what requires help. This gives providers enough context to say whether ${focus.label} is realistic and reduces the chance of comparing packages designed for very different needs.`,
+        `Add the family’s preferred timing, room arrangement, location limits and a planning budget, but do not allow budget to replace a suitability assessment.${neighbourhoodContext} Share the same brief with every shortlisted provider and ask each team to identify anything it cannot safely support. A clear written starting point makes later calls shorter, exposes assumptions and gives siblings in different countries one document to discuss.`,
+      ],
+      bullets: ["Current daily routine and abilities", "Diagnoses, medicines and recent clinical changes", "Preferred language, food, faith and social routine", "Family location, visit pattern and decision timeline"],
+    },
+    {
+      heading: "Create a shortlist before sharing contact details everywhere",
+      paragraphs: [
+        `Start with three to five plausible options rather than enquiring with every residence that appears in a search. Use the Careya directory to filter by city and stated care type, then read the sourcing note on each profile. A listing is a starting point, not proof that a bed, apartment, specialist team or quoted service is currently available. Remove options that clearly do not match the required level of support, geography or stay duration before arranging calls.`,
+        `For each remaining option, record why it may fit, what still needs confirmation and who supplied the information. Keep promotional claims separate from facts confirmed in writing. This simple discipline is particularly important when several relatives are researching in parallel: without one shortlist, families often duplicate calls, compare outdated quotations or assume that two branches of the same brand offer identical services.`,
+      ],
+    },
+    {
+      heading: `Questions that reveal whether ${focus.label} is available`,
+      paragraphs: [
+        `A polished website can explain the setting, but suitability depends on the people and systems operating on an ordinary day. Ask questions that require a specific answer: who performs an assessment, who is on site overnight, how a change is documented, and who contacts the family or treating professional. If the answer describes only what the organisation “can arrange”, ask whether that person is employed on site, visits on a schedule or is called only when needed.`,
+        `Use the same core questions on every call and write down the name and role of the person answering. When a need is clinically significant, send the relevant discharge summary or assessment through a secure channel and request written confirmation from an appropriately qualified person. Careya’s labels and filters organise research; they do not replace an individual clinical assessment or the provider’s admission decision.`,
+      ],
+      bullets: focus.questions,
+    },
+    {
+      heading: "Assess the everyday experience, not only the facilities",
+      paragraphs: [
+        `The quality of a residence is experienced through ordinary moments: getting ready in the morning, asking for help at night, choosing a meal, joining an activity or speaking privately with family. During a tour, notice whether team members know residents by name, explain before helping and allow time for a response. Look for clean, accessible spaces, but also ask how routines are adapted for a person who communicates slowly, prefers a regional language or does not want to follow the standard schedule.`,
+        `Ask to see the type of room actually available, a normal menu and a typical weekly activity plan. Visit at the time your parent is most likely to need support, not only during a staged event. Where possible, speak with more than one family and ask what changed after admission. Individual reviews provide useful questions, but a small number of highly positive or negative comments should not be treated as a complete quality assessment.`,
+      ],
+    },
+    {
+      heading: "Compare staffing, night support and emergency response",
+      paragraphs: [
+        `Terms such as 24×7 care, medical support and doctor on call can describe very different arrangements. Ask which roles are physically present on each shift, how many residents they support and what happens when the usual team member is absent. Clarify who can assist with transfers, continence, medication routines or distress during the night. If a dedicated attendant may be required, ask who employs that person, how replacement cover works and whether the cost appears in the written estimate.`,
+        `Request a plain explanation of the emergency process: who assesses the situation, which hospital is normally used, how transport is arranged and who has authority to consent or pay when the family is overseas. Confirm how the residence stores emergency contacts, advance preferences and current medication information. Families should discuss clinical risk with the treating professional; the aim of these questions is to understand the provider’s operational response, not to make a medical judgement from a tour.`,
+      ],
+    },
+    {
+      heading: "Request one written estimate that includes likely extras",
+      paragraphs: [
+        `Do not compare a room rate from one residence with an assessed-care total from another. Ask every provider for a written estimate based on the same care brief and the same expected length of stay. The document should separate accommodation, meals, personal assistance, nursing, therapy, equipment, continence or wound-care supplies, transport and taxes where applicable. It should also identify deposits, community charges, minimum-stay rules, notice periods and refund conditions.`,
+        `Ask what would cause the monthly amount to change: an annual increase, a move to another room, additional night assistance or a formal reassessment. Create a twelve-month planning view even if the immediate need is a short stay, and keep a contingency for needs that cannot be predicted. Published figures and family reports become outdated quickly, so use online prices only to frame questions and rely on the current provider-issued quotation for the final comparison.`,
+      ],
+    },
+    {
+      heading: "How NRI families can evaluate care from abroad",
+      paragraphs: [
+        `Distance changes the process, but it does not need to remove the older adult’s voice. Nominate one family coordinator, one local visitor and one clinical contact where possible. Agree who will receive routine updates, who can make urgent decisions and how siblings will access the latest documents. Ask for a live video tour that includes the available room and ordinary shared spaces, followed by an in-person visit from someone the family trusts before money or admission documents are finalised.`,
+        `Plan communication before admission rather than after a problem appears. Confirm the preferred channel, frequency and time-zone expectations for routine calls, and ask what triggers an immediate escalation. Keep passports, insurance details, prescriptions and legal authorities secure; send only what the provider legitimately needs. Careya’s concierge form can organise the location, timing and care brief into a shortlist, while the final assessment and contract remain directly between the family and the chosen provider.`,
+      ],
+    },
+    {
+      heading: "Hold a structured family decision meeting",
+      paragraphs: [
+        `When tours and quotations are complete, score each option against a small set of agreed priorities. Suitability for current needs should carry more weight than interiors, and the older adult’s preferences should be visible rather than summarised by somebody else. Discuss trade-offs openly: a residence closer to family may have fewer amenities; a larger campus may offer more activities but require a longer hospital journey. Record unresolved questions and assign one person to obtain each answer before the family commits.`,
+        `Separate the decision into three gates: can the provider safely meet the assessed needs, does daily life feel acceptable to the person, and are the financial and contractual terms workable? An option should not progress because it performs strongly on only one gate. If family members disagree, return to the evidence and the person’s stated priorities instead of adding more properties to the list. A concise comparison page can make these differences easier to see side by side.`,
+      ],
+    },
+    {
+      heading: "Plan admission, review and an alternative",
+      paragraphs: [
+        `Before admission, request a named contact, a medication and belongings checklist, the initial care plan and the date of the first review. Share familiar routines, meaningful activities and practical details that help the team support the person from the first day. Agree how the family will respond if adjustment is difficult without promising that every emotion will disappear immediately. The first review should examine what is working, what has changed and whether the agreed support is actually being delivered.`,
+        `Also ask about situations in which the residence may no longer be suitable and how much notice either side must give. Keep a copy of the contract, assessment, quotation and important correspondence. Knowing the transfer or exit process is not pessimistic; it protects the older adult if clinical needs, finances or family circumstances change. If the next step is unclear, return to the care brief, compare a small number of sourced profiles and ask for professional guidance appropriate to the person’s health.`,
+      ],
+    },
+  ];
+  const sections = [...article.sections, ...supplementalSections];
+  const words = [article.title, article.excerpt, article.summary ?? "", ...sections.flatMap((section) => [section.heading, ...section.paragraphs, ...(section.bullets ?? [])])].join(" ").trim().split(/\s+/).length;
+  return { ...article, sections, readTime: `${Math.max(5, Math.ceil(words / 220))} min read`, updatedAt: "2026-09-10" };
+}
+
+export const articles: Article[] = [...guides, ...researchGuides, ...cityArticles].map(expandArticle);
 
 export const previewReviews: ReviewPreview[] = [
   { id: "review-1", author: "Meera S.", relation: "Daughter of a resident", rating: 5, title: "The questions that helped us decide", body: "The team explained the daily routine and escalation process clearly. We appreciated being encouraged to visit more than once before deciding.", createdAt: "18 July 2026" },
