@@ -278,6 +278,10 @@ export const directoryLocations = ["gurgaon", "delhi-ncr", "mumbai", "dehradun",
   .filter((city): city is City => Boolean(city))
   .map((city) => ({ ...city, name: city.slug === "delhi-ncr" ? "Gurgaon & Delhi NCR" : city.name }));
 
+export const indianStates = [
+  "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Delhi NCR", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Ladakh", "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal",
+] as const;
+
 const defaultLocationSeo = (name: string) => ({
   seoTitle: `Assisted Living in ${name} – Compare Senior Care`,
   seoDescription: `Compare assisted living in ${name}, including care services, room options, indicative monthly prices and verified listing status.`,

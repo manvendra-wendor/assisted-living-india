@@ -3,12 +3,12 @@ import { leadSchema, listingSchema, reviewSchema } from "@/lib/validation";
 
 describe("public form validation", () => {
   it("accepts a complete concierge request", () => {
-    const result = leadSchema.safeParse({ leadType: "concierge", name: "Anita Rao", email: "anita@example.com", phone: "+91 9876543210", relationship: "My father", city: "Bengaluru", careNeeds: "Assisted living", consent: "on" });
+    const result = leadSchema.safeParse({ leadType: "concierge", name: "Anita Rao", email: "anita@example.com", phone: "+91 9876543210", relationship: "My father", preferredState: "Karnataka", city: "Bengaluru", careNeeds: "Assisted living", consent: "on" });
     expect(result.success).toBe(true);
   });
 
   it("accepts the pricing questionnaire context", () => {
-    const result = leadSchema.safeParse({ leadType: "property", propertyId: "property-01", name: "Rohan Mehta", email: "rohan@example.com", phone: "+91 9876543210", relationship: "My father", urgency: "Within 2 weeks", searchReason: "Hospital discharge or rehabilitation", city: "Gurgaon", careNeeds: "Hospital discharge or rehabilitation", budget: "₹1.25–₹2 lakh/month", consent: "on" });
+    const result = leadSchema.safeParse({ leadType: "property", propertyId: "property-01", name: "Rohan Mehta", email: "rohan@example.com", phone: "+91 9876543210", relationship: "My father", urgency: "Within 2 weeks", searchReason: "Hospital discharge or rehabilitation", preferredState: "Haryana", city: "Gurgaon", careNeeds: "Hospital discharge or rehabilitation", budget: "₹1.25–₹2 lakh/month", consent: "on" });
     expect(result.success).toBe(true);
   });
 

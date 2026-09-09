@@ -20,8 +20,8 @@ export function CityLinks({
         <SectionHeading eyebrow={eyebrow} title={title} body={body} action={{ label: "Browse the full directory", href: "/directory" }} />
         <div className="city-link-grid">
           {cities.map((location) => (
-            <Link className="city-link" href={`/assisted-living/${location.slug}`} key={location.slug}>
-              <strong>Assisted living in {location.name}</strong>
+            <Link className="city-link" href={`/assisted-living/${location.slug}`} key={location.slug} aria-label={`Explore assisted living in ${location.name}`}>
+              <strong>{location.name}</strong>
               <small>{location.region}</small>
             </Link>
           ))}

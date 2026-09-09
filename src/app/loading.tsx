@@ -1,1 +1,5 @@
-export default function Loading() { return <div style={{ minHeight: 480, display: "grid", placeItems: "center", color: "var(--forest)" }}><p>Preparing your guide…</p></div>; }
+export default function Loading() {
+  return <div className="route-loading" role="status" aria-label="Loading page">
+    <span />
+  </div>;
+}

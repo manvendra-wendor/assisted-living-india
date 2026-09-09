@@ -1,13 +1,10 @@
 import Link from "next/link";
-import { HeartHandshake, Menu, Phone } from "lucide-react";
+import { Menu, Phone } from "lucide-react";
 import { Logo } from "@/components/logo";
 
 export function SiteHeader() {
   return (
     <header className="site-header">
-      <div className="announcement">
-        <HeartHandshake size={15} /> Independent guidance for your family’s next chapter
-      </div>
       <div className="container nav-row">
         <Logo />
         <nav className="desktop-nav" aria-label="Primary navigation">
@@ -17,8 +14,8 @@ export function SiteHeader() {
           <Link href="/blog">Guides</Link>
         </nav>
         <div className="nav-actions">
-          <Link className="nav-phone" href="/concierge"><Phone size={16} /> Speak to an advisor</Link>
-          <Link className="button button-small" href="/list-your-property">List your property</Link>
+          <Link className="nav-provider" href="/list-your-property">For providers</Link>
+          <Link className="button button-small nav-phone" href="/concierge"><Phone size={15} /> Speak to an advisor</Link>
           <details className="mobile-menu">
             <summary aria-label="Open menu"><Menu size={22} /></summary>
             <nav>

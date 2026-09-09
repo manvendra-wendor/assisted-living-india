@@ -28,7 +28,7 @@ export async function submitLead(_previous: ActionState, formData: FormData): Pr
   if (!await verifyTurnstile(parsed.data.turnstileToken)) return { status: "error", message: "Please complete the security check." };
   const admin = createSupabaseAdminClient();
   if (admin) {
-    const { error } = await admin.from("leads").insert({
+    const leadRecord = {
       lead_type: parsed.data.leadType,
       property_id: parsed.data.propertyId || null,
       name: parsed.data.name,
@@ -37,6 +37,7 @@ export async function submitLead(_previous: ActionState, formData: FormData): Pr
       relationship: parsed.data.relationship,
       urgency: parsed.data.urgency || null,
       search_reason: parsed.data.searchReason || null,
+      preferred_state: parsed.data.preferredState,
       preferred_city: parsed.data.city,
       care_needs: parsed.data.careNeeds,
       budget: parsed.data.budget || null,
@@ -46,7 +47,18 @@ export async function submitLead(_previous: ActionState, formData: FormData): Pr
       utm_medium: parsed.data.utmMedium || null,
       utm_campaign: parsed.data.utmCampaign || null,
       status: "new",
-    });
+    };
+    let { error } = await admin.from("leads").insert(leadRecord);
+    // Keep lead capture working during the short window before the database migration is applied.
+    // The fallback preserves the state in the existing message field rather than losing the enquiry.
+    if (error && ["42703", "PGRST204"].includes(error.code || "")) {
+      const { preferred_state: ignoredPreferredState, ...legacyRecord } = leadRecord;
+      void ignoredPreferredState;
+      ({ error } = await admin.from("leads").insert({
+        ...legacyRecord,
+        message: `[Preferred state: ${parsed.data.preferredState}]${legacyRecord.message ? ` ${legacyRecord.message}` : ""}`,
+      }));
+    }
     if (error) return { status: "error", message: "We could not save your request. Please try again." };
   }
   await notifyLead(parsed.data.leadType === "concierge" ? "New concierge request" : `New enquiry: ${parsed.data.propertyName || "property"}`, parsed.data);

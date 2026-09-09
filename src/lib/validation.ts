@@ -12,6 +12,7 @@ export const leadSchema = z.object({
   relationship: z.string().trim().min(2, "Tell us who you are looking for"),
   urgency: z.string().trim().max(100).optional(),
   searchReason: z.string().trim().max(160).optional(),
+  preferredState: z.string().trim().min(2, "Choose the state you are looking in"),
   city: z.string().trim().min(2, "Choose a preferred location"),
   careNeeds: z.string().trim().min(2, "Choose the support needed"),
   budget: z.string().optional(),

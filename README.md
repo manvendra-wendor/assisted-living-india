@@ -1,6 +1,6 @@
-# Assisted Living India
+# Careya
 
-A premium, search-led directory for families comparing assisted living, independent living, luxury senior communities, dementia care, rehabilitation, and post-operative care across India.
+Careya is a premium, search-led directory for families comparing assisted living, independent living, luxury senior communities, dementia care, rehabilitation, and post-operative care across India. It is designed for families making a considered decision from another city or abroad.
 
 ## Local development
 
@@ -58,14 +58,36 @@ Content is organised into four silos plus a faceted directory that crosses them.
 
 Any new template that represents a page families land on should end with `CityLinks`.
 
-Three known structural gaps remain: the location and care silos have no hub index page, so their breadcrumbs point into `/directory` param URLs instead of a canonical parent; the nine `assisted-living-in-{city}` articles compete with the ten city pages for the same intent; and `gurgaon` carries `parentCitySlug: "delhi-ncr"`, so `/assisted-living/gurgaon` and `/assisted-living/delhi-ncr` render an identical property set under different URLs.
+Care pages explain the care need, city pages own local comparison intent, and property pages carry profile-level information. Keep links descriptive for screen readers and search engines while allowing concise visual labels such as city names in location cards.
+
+## Lead capture and routing
+
+Family and operator forms are intentionally progressive so the active step fits within the first viewport:
+
+- **Pricing / shortlist modal:** six short questions; selecting an option advances automatically. It captures relationship, state/UT, city, care need, timing, budget, and contact details.
+- **Concierge page:** three-step family intake for location, care context, and contact details.
+- **List your property:** three-step operator intake for residence information, verification contact, and optional property notes.
+
+`preferred_state` is sent with every family lead. Apply both the initial Supabase migration and `supabase/migrations/20260910000000_lead_preferred_state.sql`. Until that field exists in Supabase, the server fallback retains the state in the lead message so enquiries are not lost.
+
+The floating family CTA is available on informational and directory pages, but intentionally excluded from `/concierge`, `/list-your-property`, authentication, and admin routes so it never covers an active form.
+
+## SEO and indexing
+
+Careya uses `https://careya.in` as its production canonical origin by default. App routes emit canonical metadata, `lang="en-IN"`, robots directives, Open Graph metadata, and page-appropriate JSON-LD. The crawlable endpoints are:
+
+- `/sitemap.xml` — generated from the route and content collections
+- `/robots.txt` — permits public pages and points crawlers to the sitemap
+- `/llms.txt` — concise machine-readable directory guide
+
+After deployment, validate these URLs on the production domain, submit the sitemap in Google Search Console, and use URL Inspection to confirm rendered canonical and structured-data output.
 
 ## Design system
 
 Tokens live at the top of `src/app/globals.css`. There is no component library — pages compose semantic class names defined there.
 
 - **Type:** Georgia serif for `h1`/`h2`/`.display`, Avenir Next for body. The serif is the brand's distinguishing mark; keep it.
-- **Colour:** forest greens (`--forest`, `--forest-2`, `--forest-3`), warm neutrals (`--ivory`, `--cream`, `--paper`), gold accent (`--gold`, `--gold-dark`), terracotta for icon accents.
+- **Colour:** calm botanical greens (`--forest`, `--forest-2`, `--forest-3`), warm neutrals (`--ivory`, `--cream`, `--paper`), and muted olive-gold accents (`--gold`, `--gold-dark`). Primary actions remain dark eucalyptus green; all overlays are softened for a reassuring elder-care tone.
 - **Radius scale:** `--r-xs` 8px, `--r-sm` 12px, `--r-md` 18px (default card), `--r-lg` 26px (forms, search), `--r-pill` for buttons, badges, and tags.
 - **Elevation:** `--shadow-sm` at rest, `--shadow-md` on hover, `--shadow-soft` for sticky and form panels. Prefer a soft shadow over a hard `1px` border; where a border is still needed use `rgba(23,63,53,.07)`.
 
@@ -78,7 +100,7 @@ Cards float on gapped grids rather than sitting in hairline tables. When adding 
 - **Email:** Resend REST API
 - **Bot protection:** Cloudflare Turnstile
 
-Apply `supabase/migrations/20260808000000_initial.sql` to a Supabase project, configure the environment variables above, and promote an authenticated profile by setting its `role` to `admin`.
+Apply the migrations in `supabase/migrations/` in filename order to a Supabase project, configure the environment variables above, and promote an authenticated profile by setting its `role` to `admin`.
 
 ## Cloudflare Workers deployment
 
@@ -94,9 +116,9 @@ Root directory: /
 
 No build-output directory is required for Workers. OpenNext generates `.open-next`, and Wrangler uploads it according to `wrangler.jsonc`.
 
-## Content note
+## Content and sourcing note
 
-The bundled listings are clearly structured editorial preview records used to exercise search, comparison, and property profiles. They must be replaced with researched, source-cited operator records before a public launch. Never mark a property verified until its operator has confirmed the profile.
+Listings are source-labelled editorial records. A visible Google rating or review count is a sourced directory signal, not Careya’s endorsement; review text is not copied from Google. Provider websites open with `rel="nofollow"`. Never mark a property verified until its operator has confirmed the profile, and do not treat a source label as a clinical or availability guarantee.
 
 The same applies to `openRoles` in `src/lib/data.ts`, which powers `/careers`. Those entries are placeholder copy written to match the site's editorial voice, not real openings, and applications currently route to a `mailto:` address rather than into Supabase.
 

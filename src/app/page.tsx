@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
-  BadgeCheck,
   BookOpenText,
   CalendarCheck2,
   Check,
@@ -20,6 +19,7 @@ import { PropertyCard } from "@/components/property-card";
 import { SearchBox } from "@/components/search-box";
 import { JsonLd, SectionHeading } from "@/components/ui";
 import { articles, careTypes, editorialImages, popularLocations, properties, siteConfig } from "@/lib/data";
+import careyaHeroLandscape from "./careya-hero-landscape.jpg";
 
 export const metadata: Metadata = {
   title: "Careya: Assisted Living in India | Premium Senior Living Directory",
@@ -61,7 +61,6 @@ const aiOverviewFaqs = [
 ];
 
 const conciergeStats = [
-  { value: "1L-2L", label: "monthly search range many premium families compare" },
   { value: "9", label: "city guides connected through the directory" },
   { value: "24x7", label: "medical-support questions to verify before choosing" },
 ];
@@ -113,39 +112,35 @@ export default function Home() {
         },
       ]} />
       <section className="hero">
-        <Image className="hero-background-image" src={editorialImages.hero} alt="Indian family comparing senior living options at home" fill priority loading="eager" fetchPriority="high" sizes="100vw" />
+        <Image className="hero-background-image" src={careyaHeroLandscape} alt="Illustration of a senior-living residence in the Himalayan foothills of India" fill priority loading="eager" fetchPriority="high" sizes="100vw" />
         <div className="container hero-inner">
           <div className="hero-copy">
-            <span className="eyebrow">Premium senior care directory for India</span>
-            <h1>Assisted living in India for families choosing from afar.</h1>
-            <p className="hero-lede">Compare luxury old age homes, senior living communities, dementia care and recovery residences by city, services, pricing guidance, reviews and verification status.</p>
+            <div className="hero-message">
+              <span className="eyebrow">Premium senior care directory for India</span>
+              <h1>Find trusted assisted living in India, <em>chosen with care.</em></h1>
+              <p className="hero-lede">Compare senior living, dementia care and recovery residences by location, support needs, reviews and sourcing status.</p>
+            </div>
             <SearchBox />
-            <div className="hero-quick-links" aria-label="Popular assisted-living locations">
-              <span>Popular</span>
-              {popularLocations.slice(0, 4).map((location) => <Link href={`/assisted-living/${location.slug}`} key={location.slug}>{location.name}</Link>)}
-            </div>
-            <p className="hero-note"><BadgeCheck size={16} /> Every profile shows whether details are editorial, claimed or operator-verified.</p>
-          </div>
-          <div className="hero-media">
-            <div className="hero-assurance" aria-label="How the directory helps families">
-              <span className="hero-assurance-kicker"><ShieldCheck size={14} /> Made for a considered decision</span>
-              <strong>Compare care with context.</strong>
-              <p>Services, accommodation, family reviews and sourcing status—organised in one place.</p>
-              <div className="hero-assurance-list"><span><Check size={13} /> Care needs</span><span><Check size={13} /> Costs &amp; inclusions</span><span><Check size={13} /> Visit readiness</span></div>
+            <div className="hero-meta">
+              <div className="hero-quick-links" aria-label="Popular assisted-living locations">
+                <span>Popular</span>
+                {popularLocations.slice(0, 4).map((location) => <Link href={`/assisted-living/${location.slug}`} key={location.slug}>{location.name}</Link>)}
+              </div>
+              <div className="hero-proof-row" aria-label="Directory benefits">
+                {trustItems.map(({ icon: Icon, title }) => <span key={title}><Icon size={16} strokeWidth={1.7} />{title}</span>)}
+              </div>
             </div>
           </div>
-        </div>
-        <div className="container hero-trust" aria-label="Directory benefits">
-          {trustItems.map(({ icon: Icon, title, detail }) => <div className="hero-trust-item" key={title}><Icon size={22} strokeWidth={1.6} /><div><strong>{title}</strong><small>{detail}</small></div></div>)}
         </div>
       </section>
 
       <section className="nri-concierge-section">
         <div className="container nri-concierge-panel">
+          <div className="nri-concierge-photo"><Image src={editorialImages.conversation} alt="A family sharing a caring conversation with an older parent" fill sizes="(max-width: 760px) 100vw, 18vw" /></div>
           <div className="nri-concierge-intro">
             <span className="eyebrow">For families living abroad</span>
             <h2>NRI families can shortlist with fewer unknowns.</h2>
-            <p>Share your parent’s care needs, preferred city, budget range and timeline. We organise the search before you begin calling residences.</p>
+            <p>Share your parent’s care needs, preferred city and timeline. We organise the search before you begin calling residences.</p>
           </div>
           <div className="nri-stats" aria-label="Premium assisted-living search signals">
             {conciergeStats.map((stat) => <span key={stat.value}><strong>{stat.value}</strong><small>{stat.label}</small></span>)}
@@ -154,7 +149,7 @@ export default function Home() {
             <span><Plane size={19} /> Long-distance family support</span>
             <span><CalendarCheck2 size={19} /> A simpler route to a shortlist</span>
           </div>
-          <Link className="button button-light" href="/concierge">Talk through your search <ArrowRight size={17} /></Link>
+          <Link className="button button-light nri-concierge-button" href="/concierge"><span>Talk through your search</span><ArrowRight size={17} /></Link>
         </div>
       </section>
 

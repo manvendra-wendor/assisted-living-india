@@ -1,5 +1,14 @@
 # Ahrefs keyword mapping — September 2026
 
+## Current implementation notes
+
+The keyword map remains a page-ownership document, not a licence to create thin exact-match pages. Recent product work supports conversion and crawlability without changing that ownership:
+
+- City cards use concise visual labels such as “Jaipur” and “Mumbai”; the destination URL, surrounding section heading, region text, and accessible link label retain city-and-care context.
+- Family enquiries capture the preferred state/UT and city before contact details, making leads routable to the relevant operator market.
+- Concierge and operator-listing forms are staged, so the first interaction is visible without a long, scroll-heavy form.
+- Google rating numbers are displayed only where there is a source-backed listing record. Google review text is not imported.
+
 ## Source and interpretation
 
 Read all three files in `Ahrefs-keywords/`: 37 parent-topic rows in assisted-living.csv, 17 in dementia care.csv and 545 in Rehabilitation.csv (599 total). These are UTF-16, tab-separated parent-topic exports despite the CSV extension. They contain cluster counts, not the individual keywords inside each cluster. AppleDouble `._` files are filesystem metadata and are excluded.

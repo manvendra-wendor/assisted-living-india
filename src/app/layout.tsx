@@ -4,6 +4,7 @@ import { CompareProvider } from "@/components/compare-provider";
 import { PricingModalProvider } from "@/components/pricing-modal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { StickyLeadCta } from "@/components/sticky-lead-cta";
 import { editorialImages, siteConfig } from "@/lib/data";
 import "./globals.css";
 
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <SiteHeader />
             <main>{children}</main>
             <SiteFooter />
+            <StickyLeadCta />
           </PricingModalProvider>
         </CompareProvider>
       </body>
