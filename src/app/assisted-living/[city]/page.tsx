@@ -43,7 +43,7 @@ export default async function LocationPage({ params }: { params: Promise<{ city:
         { "@context": "https://schema.org", "@type": "CollectionPage", name: `Assisted Living in ${location.name}`, url: `${siteConfig.url}/assisted-living/${location.slug}`, description: location.description, mainEntity: { "@type": "ItemList", itemListElement: listings.map((property, index) => ({ "@type": "ListItem", position: index + 1, name: property.name, url: `${siteConfig.url}/properties/${property.slug}` })) } },
         { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [
           { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
-          { "@type": "ListItem", position: 2, name: "Assisted living", item: `${siteConfig.url}/directory?care=assisted-living` },
+          { "@type": "ListItem", position: 2, name: "Assisted living", item: `${siteConfig.url}/browse?care=assisted-living` },
           { "@type": "ListItem", position: 3, name: location.name, item: `${siteConfig.url}/assisted-living/${location.slug}` },
         ] },
         { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map((faq) => ({ "@type": "Question", name: faq.question, acceptedAnswer: { "@type": "Answer", text: faq.answer } })) },
@@ -68,7 +68,7 @@ export default async function LocationPage({ params }: { params: Promise<{ city:
         </div>
       </section>
       <section className="section" id="city-residences">
-        <div className="container"><SectionHeading eyebrow={`${listings.length} source-labelled profiles to explore`} title={`Compare care residences ${location.slug === "gurgaon" ? "in Gurgaon" : location.slug === "delhi-ncr" ? "across Delhi NCR" : `around ${location.name}`}`} body="Start with the services shown, then ask each operator to confirm availability and suitability following an individual assessment." action={{ label: "Open filtered directory", href: `/directory?city=${location.slug}&care=assisted-living` }} /><div className="property-grid">{listings.map((property) => <PropertyCard property={property} key={property.id} />)}</div></div>
+        <div className="container"><SectionHeading eyebrow={`${listings.length} source-labelled profiles to explore`} title={`Compare care residences ${location.slug === "gurgaon" ? "in Gurgaon" : location.slug === "delhi-ncr" ? "across Delhi NCR" : `around ${location.name}`}`} body="Start with the services shown, then ask each operator to confirm availability and suitability following an individual assessment." action={{ label: "Open filtered directory", href: `/browse?city=${location.slug}&care=assisted-living` }} /><div className="property-grid">{listings.map((property) => <PropertyCard property={property} key={property.id} />)}</div></div>
         <div className="container"><div className="care-link-row"><span>Care types in {location.name}:</span>{careTypes.map((care) => <Link href={`/care/${care.slug}`} key={care.slug}>{care.name}</Link>)}</div></div>
       </section>
       <section className="section section-soft">

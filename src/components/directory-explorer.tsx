@@ -28,14 +28,14 @@ export function DirectoryExplorer({ initialCity = "", initialCare = "" }: Direct
     const params = new URLSearchParams();
     if (nextCity) params.set("city", nextCity);
     if (nextCare) params.set("care", nextCare);
-    router.replace(`/directory${params.size ? `?${params.toString()}` : ""}`, { scroll: false });
+    router.replace(`/browse${params.size ? `?${params.toString()}` : ""}`, { scroll: false });
   };
 
   const results = useMemo(() => filterProperties(properties, { city, care, stay, room, rating, facilities: selectedFacilities, sort }), [care, city, rating, room, selectedFacilities, sort, stay]);
 
   const reset = () => {
     setCity(""); setCare(""); setStay("any"); setRoom("any"); setRating("any"); setSelectedFacilities([]); setSort("recommended");
-    router.replace("/directory", { scroll: false });
+    router.replace("/browse", { scroll: false });
   };
 
   const filterPanel = (

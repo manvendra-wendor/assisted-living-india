@@ -11,7 +11,7 @@ export function ComparisonView({ initialIds }: { initialIds: string[] }) {
   const { ids: storedIds } = useCompare();
   const ids = (initialIds.length ? initialIds : storedIds).slice(0, 3);
   const selected = ids.map((id) => properties.find((property) => property.id === id)).filter((property): property is NonNullable<typeof property> => Boolean(property));
-  if (selected.length < 2) return <div className="comparison-empty"><h2 style={{ color: "var(--forest)" }}>Choose two or three residences</h2><p style={{ color: "var(--muted)" }}>Use the Compare button on directory cards. Your selection stays on this device, and the comparison link can be shared.</p><Link className="button button-gold" href="/directory">Browse residences <Plus size={16} /></Link></div>;
+  if (selected.length < 2) return <div className="comparison-empty"><h2 style={{ color: "var(--forest)" }}>Choose two or three residences</h2><p style={{ color: "var(--muted)" }}>Use the Compare button on directory cards. Your selection stays on this device, and the comparison link can be shared.</p><Link className="button button-gold" href="/browse">Browse residences <Plus size={16} /></Link></div>;
   const countStyle = { "--compare-count": selected.length } as React.CSSProperties;
   const copyLink = async () => { await navigator.clipboard?.writeText(window.location.href); };
   return <>

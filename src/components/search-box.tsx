@@ -3,7 +3,7 @@ import { careTypes, directoryLocations } from "@/lib/data";
 
 export function SearchBox({ compact = false, defaultCity = "", defaultCare = "" }: { compact?: boolean; defaultCity?: string; defaultCare?: string }) {
   return (
-    <form className={`search-box ${compact ? "search-box-compact" : ""}`} action="/directory">
+    <form className={`search-box ${compact ? "search-box-compact" : ""}`} action="/browse">
       <label>
         <span>Where are you looking?</span>
         <select name="city" defaultValue={defaultCity} aria-label="Choose a city">

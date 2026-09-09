@@ -17,7 +17,7 @@ export function CityLinks({
   return (
     <section className="section section-soft">
       <div className="container">
-        <SectionHeading eyebrow={eyebrow} title={title} body={body} action={{ label: "Browse the full directory", href: "/directory" }} />
+        <SectionHeading eyebrow={eyebrow} title={title} body={body} action={{ label: "Browse the full directory", href: "/browse" }} />
         <div className="city-link-grid">
           {cities.map((location) => (
             <Link className="city-link" href={`/assisted-living/${location.slug}`} key={location.slug} aria-label={`Explore assisted living in ${location.name}`}>

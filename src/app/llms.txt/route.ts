@@ -40,7 +40,7 @@ Robots: ${siteConfig.url}/robots.txt
 ## Core pages
 
 - [Home](${siteConfig.url}/): Premium senior-care directory for India.
-- [Directory](${siteConfig.url}/directory): Search and compare senior living residences.
+- [Directory](${siteConfig.url}/browse): Search and compare senior living residences.
 - [Concierge](${siteConfig.url}/concierge): Family enquiry and shortlist support.
 - [Editorial policy](${siteConfig.url}/editorial-policy): How Careya labels sources, claims and verification status.
 - [List your property](${siteConfig.url}/list-your-property): Operator listing and profile-claim pathway.

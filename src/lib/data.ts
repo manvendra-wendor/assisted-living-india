@@ -801,7 +801,7 @@ export const guideTopics = [
   { id: "costs", label: "Costs & planning", description: "Know what to budget", categories: ["Costs & planning"], href: "/blog/cost-of-assisted-living-in-india" },
   { id: "memory", label: "Dementia care", description: "Find the right support", categories: ["Dementia care"], href: "/care/dementia-care" },
   { id: "recovery", label: "Recovery & rehab", description: "Plan the next step", categories: ["Recovery"], href: "/care/rehabilitation" },
-  { id: "cities", label: "City guides", description: "Explore closer to home", categories: ["City guide"], href: "/directory" },
+  { id: "cities", label: "City guides", description: "Explore closer to home", categories: ["City guide"], href: "/browse" },
 ];
 
 const articleFocus: Record<string, { label: string; careHref: string; questions: string[] }> = {

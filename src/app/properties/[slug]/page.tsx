@@ -113,7 +113,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
-      { "@type": "ListItem", position: 2, name: "Directory", item: `${siteConfig.url}/directory` },
+      { "@type": "ListItem", position: 2, name: "Directory", item: `${siteConfig.url}/browse` },
       { "@type": "ListItem", position: 3, name: city?.name || property.state, item: `${siteConfig.url}/assisted-living/${property.citySlug}` },
       { "@type": "ListItem", position: 4, name: property.name, item: `${siteConfig.url}/properties/${property.slug}` },
     ],
@@ -123,7 +123,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
       <JsonLd data={[schema, breadcrumbs]} />
       <header className="property-hero">
         <div className="container">
-          <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Directory", href: "/directory" }, { label: city?.name || property.state, href: `/assisted-living/${property.citySlug}` }, { label: property.name }]} />
+          <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Directory", href: "/browse" }, { label: city?.name || property.state, href: `/assisted-living/${property.citySlug}` }, { label: property.name }]} />
           <div className="property-title-row"><div><span className={property.verified ? "status-badge verified" : "status-badge"}>{property.verified && <BadgeCheck size={14} />}{property.verified ? "Operator verified" : "Source-labelled profile"}</span><h1>{property.name}</h1><span className="property-location"><MapPin size={15} /> {property.address}</span></div><div className="property-hero-actions"><CompareToggle id={property.id} /><a className="button button-gold" href="#enquire">Check availability</a></div></div>
           <div className="property-gallery">{property.gallery.slice(0, 3).map((image, index) => <div className="gallery-image" key={image}><Image src={image} alt={`${property.name} listing gallery image ${index + 1}`} fill priority={index === 0} sizes={index === 0 ? "70vw" : "30vw"} /></div>)}</div>
         </div>

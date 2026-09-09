@@ -40,7 +40,7 @@ const trustItems = [
 ];
 
 const searchPaths = [
-  { icon: ListChecks, title: "Compare residences online", detail: "Filter by city, care, rooms and facilities.", href: "/directory", action: "Start comparing" },
+  { icon: ListChecks, title: "Compare residences online", detail: "Filter by city, care, rooms and facilities.", href: "/browse", action: "Start comparing" },
   { icon: MessageCircleHeart, title: "Get a personal shortlist", detail: "Tell us your family’s needs and preferred location.", href: "/concierge", action: "Ask the concierge" },
   { icon: BookOpenText, title: "I’m just researching", detail: "Understand care types, costs and what to ask.", href: "/blog/what-is-assisted-living", action: "Read the essentials" },
 ];
@@ -160,7 +160,7 @@ export default function Home() {
             <h2>How to choose the best assisted living in India</h2>
             <p>Start with the parent’s daily support needs, then compare the residence by care capability, monthly inclusions, room type, emergency process, staff training, reviews and how clearly the provider documents what is included.</p>
             <div className="answer-actions">
-              <Link className="button" href="/directory">Compare residences <ArrowRight size={17} /></Link>
+              <Link className="button" href="/browse">Compare residences <ArrowRight size={17} /></Link>
               <Link className="text-link" href="/blog/how-to-choose-assisted-living">Read the comparison checklist <ChevronRight size={15} /></Link>
             </div>
           </div>
@@ -223,7 +223,7 @@ export default function Home() {
 
       <section className="section featured-residences-section">
         <div className="container">
-          <SectionHeading eyebrow="A thoughtful first look" title="Residences families are exploring" body="Preview profiles demonstrate the details you’ll be able to compare. Operator verification is always shown clearly." action={{ label: "View all residences", href: "/directory" }} />
+          <SectionHeading eyebrow="A thoughtful first look" title="Residences families are exploring" body="Preview profiles demonstrate the details you’ll be able to compare. Operator verification is always shown clearly." action={{ label: "View all residences", href: "/browse" }} />
           <div className="property-grid">
             {featured.map((property, index) => <PropertyCard property={property} priority={index < 3} key={property.id} />)}
           </div>

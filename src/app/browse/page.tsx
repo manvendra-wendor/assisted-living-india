@@ -10,11 +10,11 @@ export const metadata: Metadata = {
   title: "Assisted Living Directory India | Facilities, Costs & Reviews",
   description: "Search assisted living facilities, senior living communities, dementia care and luxury old age homes in India by city, care services, monthly pricing guidance, rooms and reviews.",
   keywords: ["assisted living facilities India", "senior living near me", "luxury old age homes India", "dementia care facilities India"],
-  alternates: { canonical: "/directory" },
+  alternates: { canonical: "/browse" },
   openGraph: {
     title: "Assisted Living Directory India",
     description: "Find and compare premium senior care residences across India.",
-    url: "/directory",
+    url: "/browse",
   },
 };
 
@@ -31,7 +31,7 @@ export default async function DirectoryPage({ searchParams }: { searchParams: Pr
           "@context": "https://schema.org",
           "@type": "CollectionPage",
           name: pageTitle,
-          url: `${siteConfig.url}/directory`,
+          url: `${siteConfig.url}/browse`,
           description: "Search assisted living facilities, senior living communities, dementia care and luxury old age homes in India.",
           mainEntity: {
             "@type": "ItemList",
@@ -48,7 +48,7 @@ export default async function DirectoryPage({ searchParams }: { searchParams: Pr
           "@type": "BreadcrumbList",
           itemListElement: [
             { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
-            { "@type": "ListItem", position: 2, name: "Directory", item: `${siteConfig.url}/directory` },
+            { "@type": "ListItem", position: 2, name: "Directory", item: `${siteConfig.url}/browse` },
           ],
         },
       ]} />

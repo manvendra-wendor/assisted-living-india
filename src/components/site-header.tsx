@@ -8,7 +8,7 @@ export function SiteHeader() {
       <div className="container nav-row">
         <Logo />
         <nav className="desktop-nav" aria-label="Primary navigation">
-          <Link href="/directory">Find a residence</Link>
+          <Link href="/browse">Find a residence</Link>
           <Link href="/care/assisted-living">Types of care</Link>
           <Link href="/compare">Compare</Link>
           <Link href="/blog">Guides</Link>
@@ -19,7 +19,7 @@ export function SiteHeader() {
           <details className="mobile-menu">
             <summary aria-label="Open menu"><Menu size={22} /></summary>
             <nav>
-              <Link href="/directory">Find a residence</Link>
+              <Link href="/browse">Find a residence</Link>
               <Link href="/care/assisted-living">Types of care</Link>
               <Link href="/compare">Compare residences</Link>
               <Link href="/blog">Guides & advice</Link>

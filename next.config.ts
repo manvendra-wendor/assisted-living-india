@@ -3,6 +3,12 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "standalone",
   allowedDevOrigins: ["127.0.0.1"],
+  async redirects() {
+    return [
+      // The directory now lives at /browse; keep the indexed path working.
+      { source: "/directory", destination: "/browse", permanent: true },
+    ];
+  },
   images: {
     // The editorial stock sources already serve responsive assets; bypassing the local proxy also
     // keeps previews reliable in restricted and serverless development environments.
