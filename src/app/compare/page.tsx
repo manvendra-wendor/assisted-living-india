@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ComparisonView } from "@/components/comparison-view";
 import { Breadcrumbs } from "@/components/ui";
 
-export const metadata: Metadata = { title: "Compare Assisted Living Residences", description: "Compare two or three senior living residences across care, rooms, stays, amenities and verification.", robots: { index: false, follow: true } };
+export const metadata: Metadata = { title: "Compare Assisted Living Residences", description: "Compare two or three senior living residences across care, rooms, stays, amenities and verification.", alternates: { canonical: "/compare" }, robots: { index: false, follow: true } };
 
 export default async function ComparePage({ searchParams }: { searchParams: Promise<{ ids?: string }> }) {
   const { ids = "" } = await searchParams;

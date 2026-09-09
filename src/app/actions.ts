@@ -16,7 +16,7 @@ async function notifyLead(subject: string, details: Record<string, unknown>) {
   await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: { authorization: `Bearer ${process.env.RESEND_API_KEY}`, "content-type": "application/json" },
-    body: JSON.stringify({ from: process.env.EMAIL_FROM || "Assisted Living India <onboarding@resend.dev>", to: [process.env.LEAD_NOTIFICATION_EMAIL], subject, html: `<h2>${subject}</h2><table>${safeRows}</table>` }),
+    body: JSON.stringify({ from: process.env.EMAIL_FROM || "Careya <onboarding@resend.dev>", to: [process.env.LEAD_NOTIFICATION_EMAIL], subject, html: `<h2>${subject}</h2><table>${safeRows}</table>` }),
   });
 }
 

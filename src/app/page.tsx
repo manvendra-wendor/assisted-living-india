@@ -22,12 +22,12 @@ import { JsonLd, SectionHeading } from "@/components/ui";
 import { articles, careTypes, editorialImages, popularLocations, properties, siteConfig } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Assisted Living in India | Premium Senior Living Directory",
+  title: "Careya: Assisted Living in India | Premium Senior Living Directory",
   description: "Compare premium assisted living, luxury senior living, dementia care and old age homes in India by city, care services, pricing guidance, reviews and verification status.",
   keywords: ["assisted living in India", "senior living India", "luxury old age homes India", "dementia care India", "retirement homes India"],
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Assisted Living in India | Premium Senior Living Directory",
+    title: "Careya: Assisted Living in India | Premium Senior Living Directory",
     description: "Compare premium assisted living, luxury senior living, dementia care and old age homes across India.",
     url: "/",
   },
@@ -88,7 +88,7 @@ export default function Home() {
         {
           "@context": "https://schema.org",
           "@type": "CollectionPage",
-          name: "Assisted Living in India",
+          name: "Careya assisted living directory",
           url: siteConfig.url,
           description: "A directory for comparing premium assisted living, senior living, dementia care and old age homes in India.",
           about: careTypes.map((care) => care.name),

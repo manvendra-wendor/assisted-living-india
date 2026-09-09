@@ -3,7 +3,7 @@ import Image from "next/image";
 import { BadgeCheck, ClipboardCheck, Users } from "lucide-react";
 import { ListingForm } from "@/components/listing-form";
 
-export const metadata: Metadata = { title: "List Your Senior Living Property", description: "Submit an assisted living, independent living, dementia care or premium senior community for editorial review." };
+export const metadata: Metadata = { title: "List Your Senior Living Property", description: "Submit an assisted living, independent living, dementia care or premium senior community for editorial review.", alternates: { canonical: "/list-your-property" } };
 
 export default function ListPropertyPage() {
   return <>

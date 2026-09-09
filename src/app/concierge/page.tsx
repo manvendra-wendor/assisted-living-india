@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Check, HeartHandshake } from "lucide-react";
 import { LeadForm } from "@/components/lead-form";
 
-export const metadata: Metadata = { title: "Free Senior Care Concierge", description: "Tell us what your family needs and receive a considered shortlist of assisted living and senior care options." };
+export const metadata: Metadata = { title: "Free Senior Care Concierge", description: "Tell us what your family needs and receive a considered shortlist of assisted living and senior care options.", alternates: { canonical: "/concierge" } };
 
 export default function ConciergePage() {
   return <div className="split-page">

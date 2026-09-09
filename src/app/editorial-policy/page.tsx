@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ContentPage } from "@/components/content-page";
 
-export const metadata: Metadata = { title: "Editorial & Verification Policy", description: "How Assisted Living India researches, labels, verifies and updates property information." };
+export const metadata: Metadata = { title: "Editorial & Verification Policy", description: "How Careya researches, labels, verifies and updates property information.", alternates: { canonical: "/editorial-policy" } };
 
 export default function EditorialPolicyPage() { return <ContentPage eyebrow="Trust & transparency" title="Editorial and verification policy" intro="We separate researched information, operator claims and verified facts so families can understand exactly what they are reading." updated="8 August 2026" sections={[
   { title: "Profile status", paragraphs: ["An editorial profile is assembled from public or supplied information but has not been confirmed by the operator. A claimed profile means an authorised representative controls or reviews it. Verified status is only added after identity and core property information have been checked."], bullets: ["Unclaimed editorial profile: not operator-confirmed", "Claimed: representative identity reviewed", "Verified: core property facts confirmed and dated"] },

@@ -13,7 +13,7 @@ interface AccountReview {
   created_at: string;
 }
 
-export const metadata: Metadata = { title: "My Account", robots: { index: false, follow: false } };
+export const metadata: Metadata = { title: "My Account", alternates: { canonical: "/account" }, robots: { index: false, follow: false } };
 
 export default async function AccountPage() {
   const account = await getCurrentProfile();

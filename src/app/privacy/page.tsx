@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ContentPage } from "@/components/content-page";
 
-export const metadata: Metadata = { title: "Privacy Policy", robots: { index: true, follow: true } };
+export const metadata: Metadata = { title: "Privacy Policy", alternates: { canonical: "/privacy" }, robots: { index: true, follow: true } };
 
 export default function PrivacyPage() { return <ContentPage eyebrow="Your information" title="Privacy policy" intro="This policy explains what the directory collects and how family, reviewer and operator information is used." updated="8 August 2026" sections={[
   { title: "Information we collect", paragraphs: ["We collect information you submit through enquiry, concierge, review, account and listing forms. This may include contact details, relationship to the person seeking care, preferred location, broad care needs and property information. Do not submit detailed medical records."] },

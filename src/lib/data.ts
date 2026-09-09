@@ -11,10 +11,10 @@ import type {
 } from "@/lib/types";
 
 export const siteConfig = {
-  name: "Assisted Living India",
-  shortName: "ALI",
+  name: "Careya",
+  shortName: "Careya",
   description:
-    "Compare premium assisted living, independent living, dementia care and senior communities across India.",
+    "Compare premium assisted living, independent living, dementia care and senior communities across India with Careya.",
   url: (process.env.NEXT_PUBLIC_SITE_URL || "https://careya.in").replace(/\/+$/, ""),
 };
 

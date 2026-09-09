@@ -33,7 +33,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="container footer-bottom">
-        <p>© {new Date().getFullYear()} Assisted Living India. Information is guidance, not medical advice.</p>
+        <p>© {new Date().getFullYear()} Careya. Information is guidance, not medical advice.</p>
         <div><Link href="/careers">Careers</Link><Link href="/editorial-policy">Editorial policy</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link></div>
       </div>
     </footer>

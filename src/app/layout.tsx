@@ -15,9 +15,11 @@ const sans = Hanken_Grotesk({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  title: { default: "Assisted Living India | Compare Premium Senior Care", template: "%s | Assisted Living India" },
+  title: { default: "Careya | Compare Premium Senior Care in India", template: "%s | Careya" },
   description: siteConfig.description,
   applicationName: siteConfig.name,
+  alternates: { canonical: "/", languages: { "en-IN": "/" } },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
   verification: { google: "To05qShSxs0zpFN-JjH1rGfSvsWReil4zmBYBCyvwKE" },
   openGraph: { type: "website", locale: "en_IN", siteName: siteConfig.name, title: siteConfig.name, description: siteConfig.description, images: [{ url: editorialImages.hero, alt: "An Indian family discussing senior living together" }] },
   twitter: { card: "summary_large_image", title: siteConfig.name, description: siteConfig.description, images: [editorialImages.hero] },
@@ -27,7 +29,7 @@ export const viewport: Viewport = { themeColor: "#173f35", colorScheme: "light" 
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={sans.variable}>
+    <html lang="en-IN" data-scroll-behavior="smooth" className={sans.variable}>
       <body>
         <CompareProvider>
           <PricingModalProvider>
