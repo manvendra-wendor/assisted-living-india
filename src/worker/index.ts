@@ -42,9 +42,14 @@ async function handleLead(request: Request, env: Env, ctx: WorkerContext) {
   if (Object.keys(errors).length) return json({ status: "error", message: "Please review the highlighted information.", errors }, 400);
   if (!await verifyTurnstile(payload, request, env)) return json({ status: "error", message: "Please complete the security check." }, 400);
 
+  const propertyId = stringValue(payload.propertyId);
+  const propertyName = stringValue(payload.propertyName);
+  const message = [propertyName && `Property: ${propertyName}`, propertyId && `Property ID: ${propertyId}`, stringValue(payload.message)]
+    .filter(Boolean)
+    .join("\n");
   const record = {
     lead_type: stringValue(payload.leadType),
-    property_id: stringValue(payload.propertyId) || null,
+    property_id: null,
     name: stringValue(payload.name),
     email: stringValue(payload.email),
     phone: stringValue(payload.phone),
@@ -55,7 +60,7 @@ async function handleLead(request: Request, env: Env, ctx: WorkerContext) {
     preferred_city: stringValue(payload.city),
     care_needs: stringValue(payload.careNeeds),
     budget: stringValue(payload.budget) || null,
-    message: stringValue(payload.message) || null,
+    message: message || null,
     source_url: stringValue(payload.sourceUrl) || null,
     utm_source: stringValue(payload.utmSource) || null,
     utm_medium: stringValue(payload.utmMedium) || null,
@@ -65,7 +70,7 @@ async function handleLead(request: Request, env: Env, ctx: WorkerContext) {
 
   const saved = await insertSupabase(env, "leads", record);
   if (!saved.ok) return json({ status: "error", message: "We could not save your request. Please try again." }, 502);
-  ctx.waitUntil(notify(env, stringValue(payload.leadType) === "concierge" ? "New concierge request" : `New enquiry: ${stringValue(payload.propertyName) || "property"}`, payload));
+  ctx.waitUntil(notify(env, stringValue(payload.leadType) === "concierge" ? "New concierge request" : `New enquiry: ${propertyName || "property"}`, payload));
   return json({ status: "success", message: "Thank you. We will reach out to you soon." });
 }
 

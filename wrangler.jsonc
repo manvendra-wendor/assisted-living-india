@@ -12,6 +12,13 @@
     "html_handling": "drop-trailing-slash",
     "not_found_handling": "404-page"
   },
+  "routes": [
+    {
+      "pattern": "careya.in",
+      "zone_name": "careya.in",
+      "custom_domain": true
+    }
+  ],
   "observability": {
     "enabled": true
   }
