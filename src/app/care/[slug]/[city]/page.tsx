@@ -9,6 +9,7 @@ import { carePageDetails, getCareType, localCarePages, properties, siteConfig } 
 
 type Props = { params: Promise<{ slug: string; city: string }> };
 export function generateStaticParams() { return localCarePages.map((page) => ({ slug: page.careSlug, city: page.citySlug })); }
+export const dynamicParams = false;
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug, city } = await params;
   const page = localCarePages.find((item) => item.careSlug === slug && item.citySlug === city);

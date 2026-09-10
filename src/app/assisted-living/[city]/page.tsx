@@ -12,6 +12,7 @@ import { articles, careTypes, getLocationCitySlugs, localCarePages, locationPage
 export function generateStaticParams() {
   return locationPages.map((location) => ({ city: location.slug }));
 }
+export const dynamicParams = false;
 
 export async function generateMetadata({ params }: { params: Promise<{ city: string }> }): Promise<Metadata> {
   const { city } = await params;

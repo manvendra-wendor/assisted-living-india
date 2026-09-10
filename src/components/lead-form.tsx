@@ -1,10 +1,9 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { FormEvent, useState } from "react";
 import { ArrowLeft, ArrowRight, ShieldCheck } from "lucide-react";
-import { submitLead } from "@/app/actions";
 import { careTypes, cities, indianStates } from "@/lib/data";
-import { initialActionState } from "@/lib/validation";
+import { initialClientFormState, submitClientForm, type ClientFormState } from "@/lib/client-forms";
 
 export function LeadForm({ type = "property", propertyId, propertyName }: { type?: "property" | "concierge"; propertyId?: string; propertyName?: string }) {
   if (type === "concierge") return <ConciergeLeadForm />;
@@ -12,9 +11,19 @@ export function LeadForm({ type = "property", propertyId, propertyName }: { type
 }
 
 function StandardLeadForm({ type, propertyId, propertyName }: { type: "property"; propertyId?: string; propertyName?: string }) {
-  const [state, action, pending] = useActionState(submitLead, initialActionState);
+  const [state, setState] = useState<ClientFormState>(initialClientFormState);
+  const [pending, setPending] = useState(false);
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setPending(true);
+    const result = await submitClientForm("/api/leads", event.currentTarget);
+    setState(result);
+    if (result.status === "success") event.currentTarget.reset();
+    setPending(false);
+  };
+
   return (
-    <form action={action}>
+    <form onSubmit={handleSubmit}>
       <input type="hidden" name="leadType" value={type} />
       <input type="hidden" name="propertyId" value={propertyId || ""} />
       <input type="hidden" name="propertyName" value={propertyName || ""} />
@@ -39,7 +48,8 @@ function StandardLeadForm({ type, propertyId, propertyName }: { type: "property"
 }
 
 function ConciergeLeadForm() {
-  const [state, action, pending] = useActionState(submitLead, initialActionState);
+  const [state, setState] = useState<ClientFormState>(initialClientFormState);
+  const [pending, setPending] = useState(false);
   const [step, setStep] = useState(1);
   const [preferredState, setPreferredState] = useState("");
   const [city, setCity] = useState("");
@@ -51,9 +61,28 @@ function ConciergeLeadForm() {
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const canContinue = step === 1 ? Boolean(preferredState && city.trim()) : step === 2 ? Boolean(relationship && careNeeds) : Boolean(name.trim() && phone.trim() && email.trim() && consent);
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setPending(true);
+    const result = await submitClientForm("/api/leads", event.currentTarget);
+    setState(result);
+    if (result.status === "success") {
+      setStep(1);
+      setPreferredState("");
+      setCity("");
+      setRelationship("");
+      setCareNeeds("");
+      setBudget("");
+      setName("");
+      setPhone("");
+      setEmail("");
+      setConsent(false);
+    }
+    setPending(false);
+  };
 
   return (
-    <form className="concierge-form" action={action}>
+    <form className="concierge-form" onSubmit={handleSubmit}>
       <div className="concierge-progress" aria-label={`Step ${step} of 3`}><span style={{ width: `${(step / 3) * 100}%` }} /></div>
       <p className="concierge-step-label">Step {step} of 3</p>
       {step === 1 && <fieldset className="concierge-step"><legend>Where are you looking?</legend><p>Start with the state or union territory, then add the city or area.</p><div className="form-grid"><div className="form-field"><label htmlFor="concierge-state">State or union territory</label><select id="concierge-state" value={preferredState} onChange={(event) => { setPreferredState(event.target.value); setCity(""); }} required><option value="">Choose a state or region</option>{indianStates.map((item) => <option key={item}>{item}</option>)}</select></div><div className="form-field"><label htmlFor="concierge-city">City or preferred area</label><input id="concierge-city" value={city} onChange={(event) => setCity(event.target.value)} required autoComplete="address-level2" placeholder="e.g. Gurgaon or Pune" list="concierge-city-options" /><datalist id="concierge-city-options">{cities.filter((item) => !preferredState || item.state === preferredState).map((item) => <option key={item.slug} value={item.name} />)}</datalist></div></div></fieldset>}

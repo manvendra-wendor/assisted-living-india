@@ -10,6 +10,7 @@ import { Breadcrumbs, JsonLd, SectionHeading } from "@/components/ui";
 import { careTypes, carePageDetails, getCareType, properties, siteConfig } from "@/lib/data";
 
 export function generateStaticParams() { return careTypes.map((care) => ({ slug: care.slug })); }
+export const dynamicParams = false;
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;

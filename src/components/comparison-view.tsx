@@ -2,14 +2,23 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Check, Minus, Plus, Share2 } from "lucide-react";
 import { PricingTrigger } from "@/components/pricing-modal";
 import { availabilityLabel, facilities, getCity, properties } from "@/lib/data";
 import { useCompare } from "@/components/compare-provider";
 
-export function ComparisonView({ initialIds }: { initialIds: string[] }) {
+export function ComparisonView({ initialIds = [] }: { initialIds?: string[] }) {
+  const [urlIds, setUrlIds] = useState<string[]>(initialIds);
   const { ids: storedIds } = useCompare();
-  const ids = (initialIds.length ? initialIds : storedIds).slice(0, 3);
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      const ids = new URLSearchParams(window.location.search).get("ids") || "";
+      setUrlIds(ids.split(",").filter(Boolean));
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+  const ids = (urlIds.length ? urlIds : storedIds).slice(0, 3);
   const selected = ids.map((id) => properties.find((property) => property.id === id)).filter((property): property is NonNullable<typeof property> => Boolean(property));
   if (selected.length < 2) return <div className="comparison-empty"><h2 style={{ color: "var(--forest)" }}>Choose two or three residences</h2><p style={{ color: "var(--muted)" }}>Use the Compare button on directory cards. Your selection stays on this device, and the comparison link can be shared.</p><Link className="button button-gold" href="/browse">Browse residences <Plus size={16} /></Link></div>;
   const countStyle = { "--compare-count": selected.length } as React.CSSProperties;

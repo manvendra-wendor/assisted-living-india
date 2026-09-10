@@ -24,7 +24,6 @@ export function SiteHeader() {
               <Link href="/compare">Compare residences</Link>
               <Link href="/blog">Guides & advice</Link>
               <Link href="/concierge">Speak to an advisor</Link>
-              <Link href="/login">Sign in</Link>
             </nav>
           </details>
         </div>

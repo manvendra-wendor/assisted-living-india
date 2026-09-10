@@ -1,13 +1,13 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { FormEvent, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { submitListing } from "@/app/actions";
 import { cities } from "@/lib/data";
-import { initialActionState } from "@/lib/validation";
+import { initialClientFormState, submitClientForm, type ClientFormState } from "@/lib/client-forms";
 
 export function ListingForm() {
-  const [state, action, pending] = useActionState(submitListing, initialActionState);
+  const [state, setState] = useState<ClientFormState>(initialClientFormState);
+  const [pending, setPending] = useState(false);
   const [step, setStep] = useState(1);
   const [propertyName, setPropertyName] = useState("");
   const [city, setCity] = useState("");
@@ -19,8 +19,27 @@ export function ListingForm() {
   const [message, setMessage] = useState("");
   const [consent, setConsent] = useState(false);
   const canContinue = step === 1 ? Boolean(propertyName.trim() && city && careTypes.trim()) : step === 2 ? Boolean(operatorName.trim() && email.trim() && phone.trim()) : consent;
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setPending(true);
+    const result = await submitClientForm("/api/listing-submissions", event.currentTarget);
+    setState(result);
+    if (result.status === "success") {
+      setStep(1);
+      setPropertyName("");
+      setCity("");
+      setCareTypes("");
+      setOperatorName("");
+      setEmail("");
+      setPhone("");
+      setWebsiteUrl("");
+      setMessage("");
+      setConsent(false);
+    }
+    setPending(false);
+  };
 
-  return <form className="listing-form" action={action}>
+  return <form className="listing-form" onSubmit={handleSubmit}>
     <div className="listing-progress" aria-label={`Step ${step} of 3`}><span style={{ width: `${(step / 3) * 100}%` }} /></div>
     <p className="listing-step-label">Step {step} of 3</p>
     {step === 1 && <fieldset className="listing-step"><legend>Tell us about the residence</legend><p>Start with the information families need to find the right profile.</p><div className="form-grid"><div className="form-field form-field-full"><label htmlFor="property-name">Property or community name</label><input id="property-name" value={propertyName} onChange={(event) => setPropertyName(event.target.value)} required autoComplete="organization" /></div><div className="form-field"><label htmlFor="listing-city">City</label><select id="listing-city" value={city} onChange={(event) => setCity(event.target.value)} required><option value="">Choose a city</option>{cities.map((item) => <option key={item.slug}>{item.name}</option>)}<option>Another location</option></select></div><div className="form-field"><label htmlFor="listing-care">Care offered</label><input id="listing-care" value={careTypes} onChange={(event) => setCareTypes(event.target.value)} required placeholder="e.g. assisted living" /></div></div></fieldset>}

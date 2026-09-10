@@ -1,22 +1,17 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "assisted-living-india",
-  "main": ".open-next/worker.js",
-  "compatibility_date": "2026-08-07",
+  "main": "src/worker/index.ts",
+  "compatibility_date": "2026-09-10",
   "compatibility_flags": [
-    "nodejs_compat",
     "global_fetch_strictly_public"
   ],
   "assets": {
-    "directory": ".open-next/assets",
-    "binding": "ASSETS"
+    "directory": "out",
+    "binding": "ASSETS",
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "404-page"
   },
-  "services": [
-    {
-      "binding": "WORKER_SELF_REFERENCE",
-      "service": "assisted-living-india"
-    }
-  ],
   "observability": {
     "enabled": true
   }

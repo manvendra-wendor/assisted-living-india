@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, Mail, MapPin } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { careTypes, popularLocations } from "@/lib/data";
 
@@ -27,8 +27,7 @@ export function SiteFooter() {
             <li><Link href="/compare">Compare residences</Link></li>
             <li><Link href="/concierge">Free concierge</Link></li>
             <li><Link href="/blog">Care guides</Link></li>
-            <li><Link href="/review-guidelines">Review guidelines</Link></li>
-            <li><Link href="/login">Sign in <ArrowUpRight size={13} /></Link></li>
+            <li><Link href="/contact">Contact Careya</Link></li>
           </ul>
         </div>
       </div>

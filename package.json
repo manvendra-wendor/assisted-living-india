@@ -12,10 +12,11 @@
     "dev": "next dev",
     "prebuild": "pnpm clean:appledouble",
     "build": "next build",
-    "build:cloudflare": "pnpm build && pnpm clean:appledouble && opennextjs-cloudflare build --skipNextBuild",
-    "preview:cloudflare": "pnpm build:cloudflare && opennextjs-cloudflare preview",
-    "deploy:cloudflare": "pnpm build:cloudflare && opennextjs-cloudflare deploy",
-    "upload:cloudflare": "pnpm build:cloudflare && opennextjs-cloudflare upload",
+    "postbuild": "pnpm clean:appledouble",
+    "build:cloudflare": "pnpm build",
+    "preview:cloudflare": "pnpm build:cloudflare && wrangler dev",
+    "deploy:cloudflare": "pnpm build:cloudflare && wrangler deploy",
+    "upload:cloudflare": "pnpm deploy:cloudflare",
     "start": "next start",
     "lint": "eslint .",
     "test": "vitest run",
@@ -24,8 +25,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@supabase/ssr": "^0.7.0",
-    "@supabase/supabase-js": "^2.57.4",
     "lucide-react": "^0.468.0",
     "next": "16.3.0",
     "react": "19.2.0",
@@ -33,7 +32,6 @@
     "zod": "^4.1.11"
   },
   "devDependencies": {
-    "@opennextjs/cloudflare": "^1.20.2",
     "@playwright/test": "^1.56.1",
     "@tailwindcss/postcss": "^4.1.14",
     "@types/node": "^22.10.2",
@@ -44,7 +42,7 @@
     "tailwindcss": "^4.1.14",
     "typescript": "^5.7.2",
     "vitest": "^3.2.4",
-    "wrangler": "^4.120.0"
+    "wrangler": "^4.130.0"
   },
   "packageManager": "pnpm@11.16.0"
 }

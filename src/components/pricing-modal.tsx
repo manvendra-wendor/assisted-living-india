@@ -1,10 +1,9 @@
 "use client";
 
-import { createContext, useActionState, useCallback, useContext, useEffect, useId, useRef, useState } from "react";
+import { createContext, FormEvent, useCallback, useContext, useEffect, useId, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, CheckCircle2, IndianRupee, ShieldCheck, X } from "lucide-react";
-import { submitLead } from "@/app/actions";
 import { cities, careTypes, indianStates } from "@/lib/data";
-import { initialActionState } from "@/lib/validation";
+import { initialClientFormState, submitClientForm, type ClientFormState } from "@/lib/client-forms";
 
 type PricingContext = { propertyId?: string; propertyName?: string; city?: string };
 type PricingModalContextValue = { openPricing: (context?: PricingContext) => void };
@@ -29,7 +28,8 @@ export function PricingTrigger({ propertyId, propertyName, city, className = "pr
 }
 
 function PricingLeadModal({ context, onClose }: { context: PricingContext; onClose: () => void }) {
-  const [state, action, pending] = useActionState(submitLead, initialActionState);
+  const [state, setState] = useState<ClientFormState>(initialClientFormState);
+  const [pending, setPending] = useState(false);
   const [step, setStep] = useState(1);
   const [relationship, setRelationship] = useState("");
   const [preferredState, setPreferredState] = useState("");
@@ -55,12 +55,19 @@ function PricingLeadModal({ context, onClose }: { context: PricingContext; onClo
   const canContinue = [Boolean(relationship), Boolean(preferredState && city.trim()), Boolean(careNeeds), Boolean(urgency), Boolean(budget)][step - 1] ?? true;
   const stepTitle = context.propertyName ? `Get pricing for ${context.propertyName}` : "Find the right senior care";
   const message = `Pricing request. Timing: ${urgency}.`;
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setPending(true);
+    const result = await submitClientForm("/api/leads", event.currentTarget);
+    setState(result);
+    setPending(false);
+  };
 
   return <div className="pricing-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
     <section className="pricing-modal" role="dialog" aria-modal="true" aria-labelledby={titleId}>
       <button ref={closeButton} className="pricing-modal-close" type="button" onClick={onClose} aria-label="Close enquiry form"><X size={20} /></button>
       {state.status === "success" ? <div className="pricing-success" aria-live="polite"><CheckCircle2 size={46} /><span className="eyebrow">Request received</span><h2 id={titleId}>Thank you — we’ll reach out soon.</h2><p>Our senior-care advisor will review the location and support you need, then help you understand suitable options.</p><button className="button button-gold" type="button" onClick={onClose}>Done</button></div> :
-        <form action={action}>
+        <form onSubmit={handleSubmit}>
           <div className="pricing-modal-head"><div className="pricing-modal-icon"><IndianRupee size={22} /></div><div><span className="eyebrow">A considered shortlist</span><h2 id={titleId}>{stepTitle}</h2></div></div>
           <div className="pricing-progress" aria-label={`Question ${step} of ${totalSteps}`}><span style={{ width: `${(step / totalSteps) * 100}%` }} /></div>
           <p className="pricing-step-label">Question {step} of {totalSteps}</p>

@@ -6,12 +6,12 @@ import { BadgeCheck, BedDouble, CalendarCheck, Camera, CheckCircle2, Clock3, Ext
 import { CompareToggle } from "@/components/compare-provider";
 import { LeadForm } from "@/components/lead-form";
 import { PricingTrigger } from "@/components/pricing-modal";
-import { ReviewForm } from "@/components/review-form";
 import { CityLinks } from "@/components/city-links";
 import { Breadcrumbs, JsonLd } from "@/components/ui";
 import { availabilityLabel, careTypes, facilities, formatPrice, getCity, getProperty, properties, siteConfig } from "@/lib/data";
 
 export function generateStaticParams() { return properties.map((property) => ({ slug: property.slug })); }
+export const dynamicParams = false;
 
 const isOperatorMedia = (image: string) => !image.includes("images.unsplash.com") && !image.includes("images.pexels.com");
 
@@ -151,7 +151,6 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
             "What is the notice period, deposit policy and refund process?",
           ].map((item) => <div key={item}><CheckCircle2 size={16} /><span>{item}</span></div>)}</div></section>
           <section><span className="eyebrow">Visit plan</span><h2>Prepare a focused tour or video call</h2><p>If you are coordinating from outside India, request a live walkthrough of the room, bathrooms, dining area, activity spaces and nursing station. Ask to meet the person who will manage daily family communication, not only the admissions team.</p><div className="facility-list"><div className="facility-item"><span><Video size={17} /> Best first step</span><span className="availability">Video tour plus care assessment</span></div><div className="facility-item"><span><MapPin size={17} /> Local context</span><span className="availability">{property.locality}, {city?.region || property.state}</span></div></div></section>
-          <section><span className="eyebrow">Family reviews</span><h2>No published reviews yet</h2><p>Be the first to share a genuine visit or resident experience. Reviews are checked against our community guidelines before publication.</p><details><summary className="button button-ghost" style={{ display: "inline-flex" }}>Write a review</summary><div className="form-card" style={{ marginTop: 20 }}><ReviewForm propertyId={property.id} propertyName={property.name} /></div></details></section>
           <section id="enquire"><div className="form-card"><span className="eyebrow">Direct enquiry</span><h2>Ask {property.name}</h2><p>Share a little context so the care team can respond meaningfully. This is an enquiry, not a booking.</p><LeadForm propertyId={property.id} propertyName={property.name} /></div></section>
           <section><span className="eyebrow">Profile transparency</span><h2>Source and verification</h2><p>This source-labelled record was last updated on {property.lastUpdated}. {property.claimed ? "The profile is claimed by the operator." : "It is unclaimed and has not been confirmed by the operator."} Google review text is not stored in this profile; numeric ratings are shown only when a source or API snapshot is available.</p><div className="source-link-row"><a className="text-link" href={property.source.url} rel={property.source.url.startsWith("http") ? "nofollow noopener noreferrer" : undefined} target={property.source.url.startsWith("http") ? "_blank" : undefined}>{property.source.label} <ExternalLink size={14} /></a>{property.officialWebsiteUrl && <a className="text-link" href={property.officialWebsiteUrl} rel="nofollow noopener noreferrer" target="_blank">Official website <ExternalLink size={14} /></a>}</div></section>
         </div>

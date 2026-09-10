@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ListFilter, RotateCcw } from "lucide-react";
 import { PropertyCard } from "@/components/property-card";
@@ -23,6 +23,15 @@ export function DirectoryExplorer({ initialCity = "", initialCare = "" }: Direct
   const [selectedFacilities, setSelectedFacilities] = useState<FacilityKey[]>([]);
   const [sort, setSort] = useState("recommended");
   const [filtersOpen, setFiltersOpen] = useState(false);
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      const params = new URLSearchParams(window.location.search);
+      setCity(params.get("city") || initialCity);
+      setCare(params.get("care") || initialCare);
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [initialCare, initialCity]);
 
   const updateLocation = (nextCity: string, nextCare: string) => {
     const params = new URLSearchParams();

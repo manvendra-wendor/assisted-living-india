@@ -3,7 +3,7 @@ import Link from "next/link";
 import { DirectoryExplorer } from "@/components/directory-explorer";
 import { CityLinks } from "@/components/city-links";
 import { Breadcrumbs, JsonLd } from "@/components/ui";
-import { getCareType, getCity, popularLocations, properties, siteConfig } from "@/lib/data";
+import { popularLocations, properties, siteConfig } from "@/lib/data";
 import { filterProperties } from "@/lib/search";
 
 export const metadata: Metadata = {
@@ -18,12 +18,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function DirectoryPage({ searchParams }: { searchParams: Promise<{ city?: string; care?: string }> }) {
-  const params = await searchParams;
-  const city = params.city ? getCity(params.city) : undefined;
-  const care = params.care ? getCareType(params.care) : undefined;
-  const pageTitle = `${care ? care.name : "Assisted living facilities"}${city ? ` in ${city.name}` : " in India"}`;
-  const listedProperties = filterProperties(properties, { city: params.city, care: params.care });
+export default function DirectoryPage() {
+  const pageTitle = "Assisted living facilities in India";
+  const listedProperties = filterProperties(properties, {});
   return (
     <>
       <JsonLd data={[
@@ -58,11 +55,11 @@ export default async function DirectoryPage({ searchParams }: { searchParams: Pr
           <span className="eyebrow">Explore senior care</span>
           <h1>{pageTitle}</h1>
           <p>Search senior living by city, care need, stay type, room, rating and medical support. Every profile makes sourcing and verification status clear.</p>
-          {!city && <div className="directory-location-links"><span>Popular locations:</span>{popularLocations.slice(0, 6).map((location) => <Link href={`/assisted-living/${location.slug}`} key={location.slug}>{location.name}</Link>)}</div>}
+          <div className="directory-location-links"><span>Popular locations:</span>{popularLocations.slice(0, 6).map((location) => <Link href={`/assisted-living/${location.slug}`} key={location.slug}>{location.name}</Link>)}</div>
         </div>
       </header>
-      <DirectoryExplorer initialCity={params.city} initialCare={params.care} />
-      <CityLinks currentSlug={params.city} />
+      <DirectoryExplorer />
+      <CityLinks />
     </>
   );
 }
