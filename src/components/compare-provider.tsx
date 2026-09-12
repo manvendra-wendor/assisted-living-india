@@ -61,7 +61,7 @@ export function CompareToggle({ id, compact = false }: { id: string; compact?: b
       disabled={!selected && atLimit}
       title={!selected && atLimit ? "You can compare up to three residences" : undefined}
     >
-      {selected ? <Check size={15} /> : <GitCompareArrows size={15} />}
+      {selected ? <Check size={compact ? 15 : 17} /> : <GitCompareArrows size={compact ? 15 : 17} />}
       {selected ? "Added" : "Compare"}
     </button>
   );

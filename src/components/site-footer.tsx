@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { Mail, MapPin } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { Logo } from "@/components/logo";
-import { careTypes, popularLocations } from "@/lib/data";
+import { careTypes, popularLocations, siteConfig } from "@/lib/data";
 
 export function SiteFooter() {
   return (
@@ -10,8 +10,9 @@ export function SiteFooter() {
         <div className="footer-intro">
           <Logo light />
           <p>Clear, compassionate guidance for families comparing premium senior care across India.</p>
-          <Link className="footer-contact" href="mailto:hello@careya.in"><Mail size={17} /> hello@careya.in</Link>
-          <span className="footer-contact"><MapPin size={17} /> Serving families across India</span>
+          <Link className="footer-contact" href="/concierge"><Phone size={17} /> Talk to an advisor</Link>
+          <Link className="footer-contact" href={`mailto:${siteConfig.email}`}><Mail size={17} /> {siteConfig.email}</Link>
+          <span className="footer-contact footer-contact-address"><MapPin size={17} /> {siteConfig.address.streetAddress}, {siteConfig.address.addressLocality}, {siteConfig.address.addressRegion} {siteConfig.address.postalCode}</span>
         </div>
         <div>
           <h3>Popular locations</h3>

@@ -60,9 +60,11 @@ const aiOverviewFaqs = [
   },
 ];
 
-const conciergeStats = [
+const nriSignals: { value?: string; icon?: typeof Plane; label: string }[] = [
   { value: "9", label: "city guides connected through the directory" },
-  { value: "24x7", label: "medical-support questions to verify before choosing" },
+  { value: "24×7", label: "medical-support questions to verify before choosing" },
+  { icon: Plane, label: "Long-distance family support" },
+  { icon: CalendarCheck2, label: "A simpler route to a shortlist" },
 ];
 
 export default function Home() {
@@ -77,6 +79,12 @@ export default function Home() {
           name: siteConfig.name,
           url: siteConfig.url,
           description: siteConfig.description,
+          logo: `${siteConfig.url}/logo.png`,
+          image: `${siteConfig.url}/logo.png`,
+          telephone: siteConfig.phone,
+          email: siteConfig.email,
+          address: { "@type": "PostalAddress", ...siteConfig.address },
+          contactPoint: [{ "@type": "ContactPoint", telephone: siteConfig.phone, email: siteConfig.email, contactType: "customer service", areaServed: "IN", availableLanguage: ["English", "Hindi"] }],
         },
         {
           "@context": "https://schema.org",
@@ -136,20 +144,16 @@ export default function Home() {
 
       <section className="nri-concierge-section">
         <div className="container nri-concierge-panel">
-          <div className="nri-concierge-photo"><Image src={editorialImages.conversation} alt="A family sharing a caring conversation with an older parent" fill sizes="(max-width: 760px) 100vw, 18vw" /></div>
+          <div className="nri-concierge-photo"><Image src={editorialImages.conversation} alt="A family sharing a caring conversation with an older parent" fill sizes="(max-width: 760px) 100vw, 38vw" /></div>
           <div className="nri-concierge-intro">
             <span className="eyebrow">For families living abroad</span>
             <h2>NRI families can shortlist with fewer unknowns.</h2>
             <p>Share your parent’s care needs, preferred city and timeline. We organise the search before you begin calling residences.</p>
+            <Link className="button button-light nri-concierge-button" href="/concierge"><span>Talk through your search</span><ArrowRight size={17} /></Link>
           </div>
-          <div className="nri-stats" aria-label="Premium assisted-living search signals">
-            {conciergeStats.map((stat) => <span key={stat.value}><strong>{stat.value}</strong><small>{stat.label}</small></span>)}
-          </div>
-          <div className="nri-concierge-points">
-            <span><Plane size={19} /> Long-distance family support</span>
-            <span><CalendarCheck2 size={19} /> A simpler route to a shortlist</span>
-          </div>
-          <Link className="button button-light nri-concierge-button" href="/concierge"><span>Talk through your search</span><ArrowRight size={17} /></Link>
+        </div>
+        <div className="container nri-signals" aria-label="Premium assisted-living search signals">
+          {nriSignals.map((signal) => <div className="nri-signal" key={signal.label}>{signal.icon ? <signal.icon size={22} /> : <strong>{signal.value}</strong>}<span>{signal.label}</span></div>)}
         </div>
       </section>
 

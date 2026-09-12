@@ -7,12 +7,12 @@ import { popularLocations, properties, siteConfig } from "@/lib/data";
 import { filterProperties } from "@/lib/search";
 
 export const metadata: Metadata = {
-  title: "Assisted Living Directory India | Facilities, Costs & Reviews",
-  description: "Search assisted living facilities, senior living communities, dementia care and luxury old age homes in India by city, care services, monthly pricing guidance, rooms and reviews.",
+  title: "Browse Assisted Living in India | Facilities, Costs & Reviews",
+  description: "Browse assisted living facilities, senior living communities, dementia care and luxury old age homes in India by city, care services, monthly pricing guidance, rooms and reviews.",
   keywords: ["assisted living facilities India", "senior living near me", "luxury old age homes India", "dementia care facilities India"],
   alternates: { canonical: "/browse" },
   openGraph: {
-    title: "Assisted Living Directory India",
+    title: "Browse Assisted Living in India",
     description: "Find and compare premium senior care residences across India.",
     url: "/browse",
   },

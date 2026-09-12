@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight, BadgeCheck, MapPin, Star } from "lucide-react";
 import { CompareToggle } from "@/components/compare-provider";
 import { PricingTrigger } from "@/components/pricing-modal";
-import { careTypes, getCity } from "@/lib/data";
+import { careTypes, formatPrice, getCity } from "@/lib/data";
 import type { Property } from "@/lib/types";
 
 export function PropertyCard({ property, priority = false }: { property: Property; priority?: boolean }) {
@@ -27,7 +27,7 @@ export function PropertyCard({ property, priority = false }: { property: Propert
           {property.careTypes.slice(0, 2).map((slug) => <span key={slug}>{careTypes.find((care) => care.slug === slug)?.name}</span>)}
         </div>
         <div className="property-footer">
-          <PricingTrigger propertyId={property.id} propertyName={property.name} city={city?.name} className="property-pricing"><small>Monthly fees</small><strong>Get pricing</strong></PricingTrigger>
+          <PricingTrigger propertyId={property.id} propertyName={property.name} city={city?.name} className="property-pricing">{property.priceFrom ? <><small>From</small><strong>{formatPrice(property.priceFrom)}</strong></> : <><small>Monthly fees</small><strong>Get pricing</strong></>}</PricingTrigger>
           <Link aria-label={`View ${property.name}`} href={`/properties/${property.slug}`}><ArrowRight size={19} /></Link>
         </div>
       </div>

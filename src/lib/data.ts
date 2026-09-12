@@ -16,6 +16,16 @@ export const siteConfig = {
   description:
     "Compare premium assisted living, independent living, dementia care and senior communities across India with Careya.",
   url: (process.env.NEXT_PUBLIC_SITE_URL || "https://careya.in").replace(/\/+$/, ""),
+  email: "hello@careya.in",
+  phone: "+91 63065 30430",
+  phoneHref: "tel:+916306530430",
+  address: {
+    streetAddress: "1st Floor, Badshahpur Sohna Rd, near Subhash Chowk, Central Park II, Sector 48",
+    addressLocality: "Gurugram",
+    addressRegion: "Haryana",
+    postalCode: "122018",
+    addressCountry: "IN",
+  },
 };
 
 export const editorialImages = {
@@ -117,7 +127,7 @@ export const cities: City[] = [
     region: "Gurugram, Haryana",
     state: "Haryana",
     shortDescription: "Premium assisted care close to hospitals, family hubs and Delhi airport.",
-    description: "Gurgaon is a leading premium eldercare market for Delhi NCR families and NRIs, with urban care homes, dementia support and emerging senior residences near major private hospitals.",
+    description: "Gurgaon is a leading premium eldercare market for Delhi NCR families and NRIs, with urban care homes, dementia support and senior residences positioned within reach of major hospitals such as Medanta, Fortis Memorial Research Institute, Artemis Hospital and Max Healthcare Gurugram.",
     neighbourhoods: ["Golf Course Road", "DLF Phase 1", "Sector 43", "Sohna Road"],
     image: "https://images.pexels.com/photos/7104646/pexels-photo-7104646.jpeg?auto=compress&cs=tinysrgb&w=1400",
   },
@@ -288,9 +298,12 @@ const defaultLocationSeo = (name: string) => ({
   secondaryKeywords: [`senior living in ${name}`, `retirement homes in ${name}`],
   marketSummary: `Families comparing senior living in ${name} should look beyond accommodation and ask how personal care, night support, nutrition, medication assistance and emergencies are managed.`,
   costContext: "Monthly fees depend on room type, caregiver support, nursing needs and therapies. Ask for an assessment-based, all-inclusive estimate before comparing providers.",
+  faqs: [] as { question: string; answer: string }[],
 });
 
-const locationSeo: Record<string, ReturnType<typeof defaultLocationSeo>> = {
+type LocationSeoEntry = Omit<ReturnType<typeof defaultLocationSeo>, "faqs"> & { faqs?: { question: string; answer: string }[] };
+
+const locationSeo: Record<string, LocationSeoEntry> = {
   chennai: {
     seoTitle: "Assisted Living in Chennai – Compare Facilities & Costs",
     seoDescription: "Compare assisted living in Chennai, care facilities, monthly costs, rooms and support across OMR, ECR, Porur and Anna Nagar.",
@@ -334,11 +347,80 @@ const locationSeo: Record<string, ReturnType<typeof defaultLocationSeo>> = {
     costContext: "NCR fees vary by locality and dependency level. Ask for a single monthly illustration that includes likely personal-care and medical-support add-ons.",
   },
   gurgaon: {
-    seoTitle: "Assisted Living in Gurgaon – Compare Premium Elder Care",
-    seoDescription: "Compare assisted living in Gurgaon by medical support, caregivers, rooms, monthly fees and location near leading Gurugram hospitals.",
+    seoTitle: "Assisted Living in Gurgaon – Compare {count} Residences",
+    seoDescription: "Compare {count} source-labelled assisted-living residences in Gurgaon by medical support, caregivers, rooms, monthly fees and hospital access.",
     secondaryKeywords: ["assisted living in Gurgaon", "senior living Gurgaon", "retirement homes Gurgaon"],
-    marketSummary: "Gurgaon is a leading premium eldercare market for Delhi NCR families and non-resident Indians. Its strongest advantage is proximity to major private hospitals, the airport and family neighbourhoods across Gurugram.",
+    marketSummary: "Gurgaon is a leading premium eldercare market for Delhi NCR families and non-resident Indians. Its strongest advantage is proximity to major private hospitals — including Medanta, Fortis Memorial Research Institute, Artemis Hospital and Max Healthcare Gurugram — alongside the airport and established family neighbourhoods across Gurugram. Families comparing Gurgaon against Noida or wider Delhi NCR should weigh the shorter hospital-transfer distance many Gurgaon addresses offer against the larger, campus-style communities more common in Bhiwadi and parts of Noida. Within Gurgaon itself, DLF Phase 1, Sector 40, Sector 43, Sector 51 and South City 2 each host at least one profiled residence, so the practical starting point is usually the family's own regular hospital or the relative most likely to visit, rather than the city's overall reputation.",
     costContext: "Premium Gurgaon pricing often reflects location, private rooms and staffing. Ask for written inclusions covering personal care, nursing, medication support, emergency transport and therapies.",
+    faqs: [
+      { question: "Which hospitals are Gurgaon assisted-living residences typically closest to?", answer: "Many Gurgaon residences are positioned within reach of Medanta, Fortis Memorial Research Institute, Artemis Hospital and Max Healthcare Gurugram, though the exact distance varies by sector — always confirm the specific hospital-transfer route and time from the address you are considering, not just the city name." },
+      { question: "Should we compare Gurgaon against Noida or wider Delhi NCR?", answer: "Gurgaon tends to offer shorter hospital-transfer distances and more urban, sector-based residences, while Bhiwadi and parts of Noida offer larger, campus-style communities. The right choice usually depends on which part of NCR the family already visits most often." },
+      { question: "What should families verify before choosing a residence in Gurgaon?", answer: "Confirm night staffing, medical escalation, caregiver training, medication processes, meal flexibility, monthly inclusions and how changing care needs are handled." },
+      { question: "Can I arrange a short or respite stay in Gurgaon?", answer: "Some residences offer trial, respite or recovery stays subject to assessment and availability. Use the stay filter or ask our concierge to confirm current options." },
+    ],
+  },
+  noida: {
+    seoTitle: "Assisted Living in Noida – Compare Senior Homes & Costs",
+    seoDescription: "Compare assisted living and senior communities across Noida, Greater Noida and the Expressway by care, rooms, monthly price and hospital access.",
+    secondaryKeywords: ["assisted living in Noida", "senior living Noida", "old age home Noida"],
+    marketSummary: "Noida's planned sectors and the Noida Expressway give families a calmer, more spacious alternative to Delhi and Gurgaon, with several residences positioned close to Sector 110-area and Greater Noida hospitals. Compare a Sector 150 or Expressway address against the family's usual travel route before shortlisting.",
+    costContext: "Noida fees are usually lower than equivalent Gurgaon addresses for a similar room and care level. Ask whether the quoted fee already includes medical escalation, physiotherapy and transport to Delhi NCR hospitals.",
+  },
+  coimbatore: {
+    seoTitle: "Assisted Living in Coimbatore – Compare Senior Care Homes",
+    seoDescription: "Compare assisted living and retirement communities in Coimbatore across Saravanampatti, Saibaba Colony and Avinashi Road by care, rooms and monthly cost.",
+    secondaryKeywords: ["assisted living in Coimbatore", "old age home Coimbatore", "senior living Coimbatore"],
+    marketSummary: "Coimbatore's cooler climate and established hospital network (including Kovai Medical Center and PSG Hospitals) have made it a long-running South India retirement destination. Families should weigh a quieter Kovaipudur or Saravanampatti address against travel time to the family's preferred hospital.",
+    costContext: "Coimbatore pricing tends to sit below Chennai and Bengaluru for a comparable room and care level. Confirm what is included beyond accommodation — personal care hours, nursing visits and physiotherapy are the items most often billed separately.",
+  },
+  kochi: {
+    seoTitle: "Assisted Living in Kochi – Compare Kerala Senior Care",
+    seoDescription: "Compare assisted living, transition care and senior communities in Kochi across Kakkanad, Edappally and Tripunithura with care and cost guidance.",
+    secondaryKeywords: ["assisted living in Kochi", "old age home Kochi", "senior care Kerala"],
+    marketSummary: "Kochi's eldercare market is shaped by Kerala's strong home-nursing tradition and a large Gulf-returnee family base, so many residences emphasise Malayalam-speaking staff and familiar food alongside clinical support. Hospital access — Amrita, Aster Medcity and Lisie among them — is a realistic differentiator between neighbourhoods.",
+    costContext: "Ask Kochi providers to separate the base room fee from nursing visits, medication administration and therapy sessions, since Kerala operators vary widely in how much clinical support is bundled in versus billed per visit.",
+  },
+  hosur: {
+    seoTitle: "Assisted Living in Hosur – Compare Senior Homes Near Bengaluru",
+    seoDescription: "Compare assisted living and senior communities in Hosur, a quieter, lower-cost alternative to Bengaluru with care, rooms and pricing guidance.",
+    secondaryKeywords: ["assisted living in Hosur", "old age home Hosur", "senior living near Bengaluru"],
+    marketSummary: "Hosur sits just across the Karnataka–Tamil Nadu border from South Bengaluru, and its residences are often chosen by families who want lower land and staffing costs without losing easy access to Bengaluru's hospitals via Electronic City or Bannerghatta Road. Confirm the actual drive time from the family's Bengaluru base before shortlisting.",
+    costContext: "Hosur pricing is generally lower than an equivalent Bengaluru address. Ask what is included for medical emergencies, since the nearest tertiary hospital may be in Bengaluru rather than Hosur itself.",
+  },
+  hyderabad: {
+    seoTitle: "Assisted Living in Hyderabad – Compare Senior Communities",
+    seoDescription: "Compare assisted living and senior communities in Hyderabad across Kondapur, Kokapet and Secunderabad by care, rooms and monthly pricing.",
+    secondaryKeywords: ["assisted living in Hyderabad", "senior living Hyderabad", "old age home Hyderabad"],
+    marketSummary: "Hyderabad's western growth corridor — Kondapur, Gachibowli and Kokapet — has drawn several newer senior-living developments, partly to serve families whose adult children relocated for the city's IT sector. Hospital access (including Apollo, Yashoda and Continental Hospitals) and distance from that corridor are worth comparing directly against Secunderabad-side options.",
+    costContext: "Compare western-corridor pricing against Secunderabad and older parts of the city separately — newer western developments often carry a premium for larger rooms and amenities rather than a materially different care level.",
+  },
+  kolkata: {
+    seoTitle: "Assisted Living in Kolkata – Compare Senior Care Homes",
+    seoDescription: "Compare assisted living and senior communities in Kolkata across New Town, Salt Lake and Tollygunge with care, rooms and monthly cost guidance.",
+    secondaryKeywords: ["assisted living in Kolkata", "old age home Kolkata", "senior living Kolkata"],
+    marketSummary: "Kolkata families often weigh newer, purpose-built residences in New Town and Salt Lake against smaller, more centrally located homes nearer Tollygunge and south Kolkata. Bengali-speaking staff, familiar meals and cultural routines are worth confirming directly, alongside access to hospitals such as AMRI and Apollo Gleneagles.",
+    costContext: "Kolkata's older, centrally located homes can carry different inclusions than newer New Town campuses — ask for a single written monthly estimate covering personal care, nursing and any deposit before comparing across neighbourhoods.",
+  },
+  "chandigarh-tricity": {
+    seoTitle: "Assisted Living in Chandigarh Tricity – Compare Senior Homes",
+    seoDescription: "Compare assisted living and retirement communities across Chandigarh, Mohali and Panchkula with care, rooms and monthly pricing guidance.",
+    secondaryKeywords: ["assisted living Chandigarh", "senior living Mohali", "old age home Panchkula"],
+    marketSummary: "The Chandigarh Tricity's planned, low-density layout and green cover are a consistent draw for retirement living, and it remains a strong choice for Punjabi families with children settled abroad in Canada, the UK or the US. PGI Chandigarh's presence makes tertiary hospital access a genuine differentiator worth checking against each residence's exact location in Chandigarh, Mohali, Panchkula or Zirakpur.",
+    costContext: "Zirakpur and outer Mohali addresses typically price lower than central Chandigarh for a comparable room. Confirm what happens to the monthly fee if a resident's care needs increase, since tricity operators vary in how graded care is billed.",
+  },
+  bhiwadi: {
+    seoTitle: "Assisted Living in Bhiwadi – Compare Senior Living Communities",
+    seoDescription: "Compare senior living communities and assisted living in Bhiwadi, a recognised Delhi NCR retirement cluster, by care, rooms and cost.",
+    secondaryKeywords: ["senior living Bhiwadi", "retirement homes Bhiwadi", "assisted living Bhiwadi"],
+    marketSummary: "Bhiwadi has grown into a recognised senior-living cluster on the Delhi–Jaipur corridor, largely because larger land parcels there support bigger campus-style retirement communities than a comparable Gurgaon plot allows. Most residents are visited by NCR-based family, so check the realistic drive time from Gurgaon or Delhi rather than straight-line distance.",
+    costContext: "Bhiwadi campuses often price lower per month than an equivalent Gurgaon residence for larger accommodation. Ask specifically how medical emergencies are handled given the distance to major NCR hospitals.",
+  },
+  jaipur: {
+    seoTitle: "Assisted Living in Jaipur – Compare Retirement Communities",
+    seoDescription: "Compare assisted living and retirement communities in Jaipur across Vaishali Nagar, Jagatpura and Ajmer Road by care, rooms and monthly cost.",
+    secondaryKeywords: ["assisted living in Jaipur", "retirement homes Jaipur", "old age home Jaipur"],
+    marketSummary: "Jaipur's organised retirement-community operators appeal to Rajasthani families, including many with children settled abroad, who want North India access at a slower pace than Delhi NCR. Given the city's hot summers, ask how each residence manages cooling, hydration and outdoor time between April and June, alongside access to hospitals such as SMS Hospital, Fortis and Narayana.",
+    costContext: "Compare Jaipur's organised retirement-community pricing (often quoted as a larger one-time or long-stay package) against smaller assisted-living operators billing monthly, since the two models are not directly comparable on a headline number alone.",
   },
 };
 
@@ -352,6 +434,7 @@ export const locationPages = [
     neighbourhoods: city.neighbourhoods,
     image: city.image,
     ...(locationSeo[city.slug] ?? defaultLocationSeo(city.name)),
+    faqs: locationSeo[city.slug]?.faqs ?? [],
   })),
 ];
 

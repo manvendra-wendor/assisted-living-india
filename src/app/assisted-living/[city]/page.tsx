@@ -18,11 +18,14 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   const { city } = await params;
   const location = locationPages.find((item) => item.slug === city);
   if (!location) return {};
+  const count = properties.filter((property) => getLocationCitySlugs(location.slug).includes(property.citySlug)).length;
+  const title = location.seoTitle.replace("{count}", String(count));
+  const description = location.seoDescription.replace("{count}", String(count));
   return {
-    title: location.seoTitle,
-    description: location.seoDescription,
+    title,
+    description,
     alternates: { canonical: `/assisted-living/${location.slug}` },
-    openGraph: { title: location.seoTitle, description: location.seoDescription, url: `/assisted-living/${location.slug}`, images: [location.image] },
+    openGraph: { title, description, url: `/assisted-living/${location.slug}`, images: [location.image] },
   };
 }
 
@@ -35,8 +38,10 @@ export default async function LocationPage({ params }: { params: Promise<{ city:
   const article = articles.find((item) => item.citySlug === location.parentCitySlug);
   const faqs = [
     { question: `How much does assisted living in ${location.name} cost?`, answer: location.costContext },
-    { question: "What should families verify before choosing?", answer: "Confirm night staffing, medical escalation, caregiver training, medication processes, meal flexibility, monthly inclusions and how changing care needs are handled." },
-    { question: "Can I arrange a short or respite stay?", answer: "Some residences offer trial, respite or recovery stays subject to assessment and availability. Use the stay filter or ask our concierge to confirm current options." },
+    ...(location.faqs.length ? location.faqs : [
+      { question: "What should families verify before choosing?", answer: "Confirm night staffing, medical escalation, caregiver training, medication processes, meal flexibility, monthly inclusions and how changing care needs are handled." },
+      { question: "Can I arrange a short or respite stay?", answer: "Some residences offer trial, respite or recovery stays subject to assessment and availability. Use the stay filter or ask our concierge to confirm current options." },
+    ]),
   ];
   return (
     <>
@@ -50,7 +55,7 @@ export default async function LocationPage({ params }: { params: Promise<{ city:
         { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map((faq) => ({ "@type": "Question", name: faq.question, acceptedAnswer: { "@type": "Answer", text: faq.answer } })) },
       ]} />
       <header className="care-editorial-hero">
-        <div className="container"><Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Assisted living", href: "/care/assisted-living" }, { label: location.name }]} /><div className="care-editorial-grid"><div><span className="eyebrow">Senior care in {location.region}</span><h1>{location.slug === "bengaluru" ? "Senior living & retirement homes in Bangalore" : `Assisted living in ${location.name}`}</h1><p>{location.description}</p><a href="#city-residences" className="button">Compare local residences <ArrowRight size={16} /></a></div><div className="care-editorial-photo"><Image src={location.image} alt={`${location.name}, India`} fill priority sizes="(max-width: 760px) 100vw, 45vw" /></div></div><div className="care-hero-search"><SearchBox compact defaultCity={location.slug} defaultCare="assisted-living" /></div></div>
+        <div className="container"><Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Assisted living", href: "/care/assisted-living" }, { label: location.name }]} /><div className="care-editorial-grid"><div><span className="eyebrow">Senior care in {location.region}</span><h1>{location.slug === "bengaluru" ? "Senior living & retirement homes in Bangalore" : `Assisted living in ${location.name}`}</h1><p>{location.description}</p><p>Compare {listings.length} source-labelled residence{listings.length === 1 ? "" : "s"} across {location.name}.</p><a href="#city-residences" className="button">Compare local residences <ArrowRight size={16} /></a></div><div className="care-editorial-photo"><Image src={location.image} alt={`${location.name}, India`} fill priority sizes="(max-width: 760px) 100vw, 45vw" /></div></div><div className="care-hero-search"><SearchBox compact defaultCity={location.slug} defaultCare="assisted-living" /></div></div>
       </header>
       <section className="location-overview">
         <div className="container location-overview-grid">

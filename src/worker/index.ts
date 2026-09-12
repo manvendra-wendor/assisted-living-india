@@ -24,6 +24,7 @@ const worker = {
 
     if (url.pathname === "/api/leads") return handleLead(request, env, ctx);
     if (url.pathname === "/api/listing-submissions") return handleListingSubmission(request, env, ctx);
+    if (url.pathname === "/api/reviews") return handleReview(request, env, ctx);
 
     return env.ASSETS.fetch(request);
   },
@@ -100,6 +101,36 @@ async function handleListingSubmission(request: Request, env: Env, ctx: WorkerCo
   if (!saved.ok) return json({ status: "error", message: "We could not save the submission. Please try again." }, 502);
   ctx.waitUntil(notify(env, `New property submission: ${record.property_name}`, payload));
   return json({ status: "success", message: "Your property is in our editorial review queue. We will contact you to verify the details." });
+}
+
+async function handleReview(request: Request, env: Env, ctx: WorkerContext) {
+  if (request.method !== "POST") return json({ status: "error", message: "Method not allowed." }, 405);
+  const payload = await readPayload(request);
+  if (!payload || hasHoneypot(payload)) return json({ status: "success", message: "Thank you for sharing your experience." });
+
+  const errors = requireFields(payload, ["propertyId", "propertyName", "rating", "title", "body", "relationship"]);
+  const rating = Number(payload.rating);
+  if (!Number.isInteger(rating) || rating < 1 || rating > 5) errors.rating = ["Choose a rating from 1 to 5."];
+  if (stringValue(payload.body).length < 30) errors.body = ["Please share at least 30 characters."];
+  if (stringValue(payload.visitConfirmed) !== "on") errors.visitConfirmed = ["Please confirm you have first-hand experience."];
+  if (Object.keys(errors).length) return json({ status: "error", message: "Please review the highlighted information.", errors }, 400);
+  if (!await verifyTurnstile(payload, request, env)) return json({ status: "error", message: "Please complete the security check." }, 400);
+
+  const record = {
+    property_id: stringValue(payload.propertyId),
+    rating,
+    title: stringValue(payload.title),
+    body: stringValue(payload.body),
+    relationship: stringValue(payload.relationship),
+    stay_date: stringValue(payload.stayDate) || null,
+    visit_confirmed: true,
+    status: "pending",
+  };
+
+  const saved = await insertSupabase(env, "reviews", record);
+  if (!saved.ok) return json({ status: "error", message: "We could not save your review. Please try again." }, 502);
+  ctx.waitUntil(notify(env, `New review: ${stringValue(payload.propertyName) || record.property_id}`, payload));
+  return json({ status: "success", message: "Thank you. Your review is pending an editorial check before publishing." });
 }
 
 async function readPayload(request: Request) {
